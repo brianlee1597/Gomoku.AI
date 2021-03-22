@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  /*grid-template: auto 1fr auto / auto 1fr auto; */
+  background-color: white;
+}
+#boardUI {
+  /* grid-column: 2 / 3; */
+  background-color: transparent;
+}
+#stoneLayer {
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+}
