@@ -11,16 +11,21 @@
 
     <canvas id="boardUI" width="550" height="550"></canvas>
     <canvas id="stoneLayer" width="550" height="550"></canvas>
-    <div style="position: absolute;">
-    
+    <div style="position: absolute;">   
         <button id="white" onclick="startingStoneColor(this.id)">White</button>
-        <button id="black" onclick="startingStoneColor(this.id)">Black</button>
-    
+        <button id="black" onclick="startingStoneColor(this.id)">Black</button>  
     </div>
 
+    <!--Functions/Classes to use or call in before Game.js-->
+    <script src="HelperFunctions.js"></script>
     <script src="LinkedGrid.js"></script>
     <script src="MakeBoard.js"></script>
-    <script src="game.js"></script>
-    <script src="playGame.js"></script>
+    <script src="Player.js"></script>
+    <script src="Bot.js"></script>
+    <!--Functions/Classes to use or call in before Game.js-->
+
+    <!--Actual Game Script-->
+    <script src="Game.js"></script>
+    <!--Actual Game Script-->
 </body>
 </html>
