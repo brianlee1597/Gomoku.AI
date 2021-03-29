@@ -12,23 +12,22 @@ class LinkedGrid
 //                    /        |        \
         this.bottomLeft =  this.down   =  this.bottomRight  = null
     }
-
     exists(){
-        return boxAt(x, y)
+        return this !== null
     }
     isEmpty(){
         return this.data === null
     }
     hasNextLeft(){
-        return boxAt(x, y).left !== null
+        return this.left !== null
     }
     hasNextRight(){
-        return boxAt(x, y).right !== null
+        return this.right !== null
     }
 }
 
 function boxAt(x,y) 
 {
-    const  boxAt = window['boxAt' + x + y] != undefined? window['boxAt' + x + y]: null
+    const  boxAt = window['boxAt' + x + 'x' + y] != undefined? window['boxAt' + x + 'x' + y]: null
     return boxAt
 }

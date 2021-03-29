@@ -15,30 +15,23 @@ function visualizeBoard() {
 /*------------Board Visualizing Animation------------*/
 
 /*------------Make Board Grid with LinkedGrid------------*/
-function makeBoard(x, y)
+function makeBoard(i, j)
 {
-    const NUM_OF_ROWS = x
-    const NUM_OF_COLS = y
+    const NUM_OF_ROWS = i
+    const NUM_OF_COLS = j
 
     //Make x*y amount of nodes and name them boxAt + coordinate
     for(let x = 1; x <= NUM_OF_ROWS; x++){
         for(let y = 1; y <= NUM_OF_COLS; y++){
-            window['boxAt' + x + y] = new LinkedGrid(x, y)
+            window['boxAt' + x + 'x' + y] = new LinkedGrid(x, y)
         }
     }   
-
     //Doubly link all the nodes to each other by using their name properties
-    for(let x = 1; x < NUM_OF_ROWS; x++){
-        for(let y = 1; y < NUM_OF_COLS; y++){
-            boxAt(x, y).left  = boxAt(x-1, y)
-            boxAt(x, y).right = boxAt(x+1, y)
-            boxAt(x, y).up    = boxAt(x, y-1)
-            boxAt(x, y).down  = boxAt(x, y+1)
-            boxAt(x, y).bottomLeft  = boxAt(x-1, y+1)
-            boxAt(x, y).bottomRight = boxAt(x+1, y+1)
-            boxAt(x, y).topLeft     = boxAt(x-1, y-1)
-            boxAt(x, y).topRight    = boxAt(x+1, y+1)
-        }   
+    for(let x = 1; x <= NUM_OF_ROWS; x++){
+        for(let y = 1; y <= NUM_OF_COLS; y++){
+            boxAt(x, y).left = boxAt(x, y-1)
+            boxAt(x, y).right = boxAt(x, y+1)
+        }
     }
 }
 /*------------Make Board Grid with LinkedGrid------------*/
