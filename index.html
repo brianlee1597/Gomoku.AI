@@ -5,24 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Gomoku</title>
+    <script defer src="scripts/LinkedGrid.js"></script>
+    <script defer src="scripts/Board.js"></script>
+    <script defer src="scripts/Player.js"></script>
+    <script defer src="scripts/Bot.js"></script>
+    <script defer src="Game.js"></script>
+    <title>Gomoku by Brian Lee</title>
 </head>
 <body>
 
-    <canvas id="boardUI" width="550" height="550"></canvas>
-    <canvas id="stoneLayer" width="550" height="550"></canvas>
-    <canvas id="AIVisualizationLayer" width="550" height="550"></canvas>
+    <canvas id="boardUILayer" width="550" height="550"></canvas>
+    <canvas id="placeStoneLayer" width="550" height="550"></canvas>
+    <canvas id="botScanLayer" width="550" height="550"></canvas>
+    <canvas id="scoredNodeHighlightLayer" width="550" height="550"></canvas>
 
-    <button style="position: absolute;" onclick="switchTest()">VisualizeAI</button>
+    <button style="position: absolute;" onclick="togglePBelow()">VisualizeAI</button>
+    <p style="position: absolute; margin-top: 100px;" class="hidden">visualization is on!</p>
 
-    <!--Functions/Classes to use or call in before Game.js-->
-    <script src="HelperFunctions.js"></script>
-    <script src="LinkedGrid.js"></script>
-    <script src="Board.js"></script>
-    <script src="Player.js"></script>
-    <script src="Bot.js"></script>
-
-    <!--Actual Game Script-->
-    <script src="Game.js"></script>
 </body>
 </html>

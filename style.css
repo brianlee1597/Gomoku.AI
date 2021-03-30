@@ -6,11 +6,12 @@ body {
   place-items: center;
   background-color: white;
 }
-#boardUI {
+/* #boardUI {
   background-color: transparent;
-}
-#stoneLayer,
-#AIVisualizationLayer {
+} */
+#placeStoneLayer,
+#botScanLayer,
+#scoredNodeHighlightLayer {
   position: absolute;
   margin: auto;
   left: 0;
@@ -18,4 +19,8 @@ body {
   top: 0;
   bottom: 0;
   text-align: center;
+}
+
+.hidden {
+  display: none;
 }

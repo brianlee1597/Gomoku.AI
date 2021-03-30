@@ -1,4 +1,4 @@
-const PLAYINGFIELD = document.getElementById('stoneLayer')
+const PLAYINGFIELD = document.getElementById('placeStoneLayer')
 const ON = PLAYINGFIELD.addEventListener
 
 //Display modal, Player chooses their color, and who starts.
