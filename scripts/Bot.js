@@ -1,13 +1,12 @@
 const AICanvas  = document.getElementById('botScanLayer')
 const AIContext = AICanvas.getContext('2d')
 
-let scanHorizontal = (node) => {
+let scanHorizontal = node => {
     let scanEachColumn = () => {
         setTimeout(() => {
             highlight(node)
             if(node.has('right')){
-                node = node.right
-                scanEachColumn()
+                node = node.right, and, scanEachColumn()
             }
             else if(!node.has('right')) 
                 clearCanvas()
@@ -30,22 +29,21 @@ const clearCanvas = () => {
     clearCol(i+50) // i+50 = clears 1 column at a time each loop
 }
 
-const highlight = (node) => {
-    const x = getCoordinate(node.y)
-    const y = getCoordinate(node.x)
-
-    if(node.data !== null) return
-    
-    const RADIUS = 2.5
+const highlight = node => { 
+    if(node.hasStone()) 
+        return
+    const x = coordinateOf(node.y), y = coordinateOf(node.x)
     AIContext.beginPath()
-    AIContext.arc(x, y, RADIUS, 0, 2 * Math.PI, false)
-    AIContext.fillStyle = 'grey'
-    AIContext.fill()
-    AIContext.lineWidth = 1
-    AIContext.strokeStyle = 'grey'
-    AIContext.stroke()
+    AIContext.arc(x, y, 3, 0, 2 * Math.PI, false)
+    AIContext.fillStyle = '#e63946', and, AIContext.fill()
 }
 
-const getCoordinate = xOrY => {
-    return xOrY * 25 + (25 * (xOrY - 1)) 
+const coordinateOf = xOrY => xOrY * 25 + (25 * (xOrY - 1))
+
+const toggleVis = () => {
+    visualAI = visualAI == false? true: false
+
+    const vizAlert = document.querySelector('p').classList
+    if (vizAlert.contains('hidden')) vizAlert.remove('hidden') 
+    else vizAlert.add('hidden')
 }

@@ -1,10 +1,11 @@
-class LinkedGrid
-{
-    constructor(x,y)
+class LinkedGrid {
+
+    constructor (x,y) 
     {
         this.x = x
         this.y = y
-        this.name = "Node at ("+ "Row " + x + ", Col " + y + ")"
+        this.name  = "Node at ("+ "Row " + x + ", Col " + y + ")"
+        this.stone = false
 
         this.topLeft    =  this.up     =  this.topRight     = null
 //                    \        |        /
@@ -12,16 +13,18 @@ class LinkedGrid
 //                    /        |        \
         this.bottomLeft =  this.down   =  this.bottomRight  = null
     }
-    exists  = () => { return this !== null       }
-    isEmpty = () => { return this.data === null  }
-    has = (pointer) => {
-        return pointer === 'left'?  this.left  !== null
+
+    exists   = () => this !== null
+    isEmpty  = () => this.data === null
+    hasStone = () => this.stone === true
+    has = pointer => {
+        return pointer === 'up'? this.up !== null
+              :pointer === 'down'? this.down !== null
+              :pointer === 'left'? this.left !== null
               :pointer === 'right'? this.right !== null
-              :pointer === 'up'?    this.up    !== null
-              :pointer === 'down'?  this.down  !== null
-              :pointer === 'topLeft'?  this.topLeft  !== null
+              :pointer === 'topLeft'? this.topLeft !== null
               :pointer === 'topRight'? this.topRight !== null
-              :pointer === 'bottomLeft'?  this.bottomLeft  !== null
+              :pointer === 'bottomLeft'? this.bottomLeft !== null
               :pointer === 'bottomRight'? this.bottomRight !== null
               :false
     }

@@ -6,9 +6,6 @@ body {
   place-items: center;
   background-color: white;
 }
-/* #boardUI {
-  background-color: transparent;
-} */
 #placeStoneLayer,
 #botScanLayer,
 #scoredNodeHighlightLayer {
@@ -18,9 +15,7 @@ body {
   right: 0;
   top: 0;
   bottom: 0;
-  text-align: center;
 }
-
 .hidden {
   display: none;
 }

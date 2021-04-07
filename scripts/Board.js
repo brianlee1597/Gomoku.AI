@@ -1,12 +1,11 @@
-/*------------Board Visualizing Animation------------*/
-const canvas  = document.getElementById('boardUILayer')
-const ctx     = canvas.getContext('2d')
+const canvas = document.getElementById('boardUILayer')
+const ctx = canvas.getContext('2d')
 
-const visualizeBoard = () => {
+/*------------Board Visualizing Animation------------*/
+const visualizeBoard = () => { 
     let margin = 0
-    while(margin <= 550){
-        drawHorizontalLine(margin)
-        drawVerticalLine(margin)
+    while(margin <= 550) {
+        drawLine('horizontal', margin), drawLine('vertical', margin)
         margin += 50
     }
 }
@@ -20,41 +19,33 @@ const makeBoard = (rownum, colnum) => {
             window['nodeAt' + x + 'x' + y] = new LinkedGrid(x, y)
         }
     }   
-    //Doubly link all the nodes to each other by using their name properties
+    //Then doubly link all the nodes to each other by using their name properties
     for(let x = 1; x <= rownum; x++){
         for(let y = 1; y <= colnum; y++){
-            nodeAt(x, y).left = nodeAt(x, y-1)
-            nodeAt(x, y).right =  nodeAt(x, y+1)
+            nodeAt(x, y).left  = nodeAt(x, y-1)
+            nodeAt(x, y).right = nodeAt(x, y+1)
         }
     }
 }
 /*------------Make Board Grid with LinkedGrid------------*/
 
-let horizontalLine = 0
-let verticalLine   = 0
-const speed = 0.5
+let line = 0, speed = 0.25
 
-const drawHorizontalLine = m => {
-    const drawLineH = () => {
-        horizontalLine = horizontalLine < 550? horizontalLine+speed: horizontalLine;
-        ctx.beginPath();
-        ctx.moveTo(m+25, 0)
-        ctx.lineWidth = 0.5
-        ctx.strokeStyle = 'lightgrey'
-        ctx.lineTo(m+25, horizontalLine)
-        ctx.stroke()
-        window.requestAnimationFrame(drawLineH)
-    }
-    window.requestAnimationFrame(drawLineH)
-}
-const drawVerticalLine = m => {
-    const drawLineV = () => {
-        verticalLine = verticalLine < 550? verticalLine+speed: verticalLine
+const drawLine = (hOrV, margin) => { 
+    const drawTheLine = () => {
         ctx.beginPath()
-        ctx.moveTo(0, m+25)
-        ctx.lineTo(verticalLine, m+25)
+        line = line < 550? line + speed: line
+        ctx.lineWidth = 0.5, ctx.strokeStyle = '#e5e5e5'
+        if (hOrV === 'horizontal') {
+            ctx.moveTo(0, margin + 25)
+            ctx.lineTo(line, margin + 25)
+        }
+        else {
+            ctx.moveTo(margin + 25, 0)
+            ctx.lineTo(margin + 25, line)
+        }
         ctx.stroke()
-        window.requestAnimationFrame(drawLineV)
+        window.requestAnimationFrame(drawTheLine)
     }
-    window.requestAnimationFrame(drawLineV)
+    window.requestAnimationFrame(drawTheLine)
 }
