@@ -5,8 +5,8 @@ const whateverPlayerChose = '#457b9d'
 let x, and, y = null, visualAI = false,
 then, currStoneColor = whateverPlayerChose
 
-makeBoard(11,11), then, visualizeBoard()
+makeBoard(11,11), then, visualizeBoard(11)
 on('mousedown', youPlaceStone)
-//after youPlaceStone, AIPlaceStone.
+on('mouseup', AIPlaceStone)
 
-//if(checkIfRowOf5() == true) then end game. Display Who Won.
+/*if(5InRow) endGame()*/

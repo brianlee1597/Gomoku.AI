@@ -2,12 +2,11 @@ const canvas = document.getElementById('boardUILayer')
 const ctx = canvas.getContext('2d')
 
 /*------------Board Visualizing Animation------------*/
-const visualizeBoard = () => { 
-    let margin = 0
-    while(margin <= 550) {
-        drawLine('horizontal', margin), drawLine('vertical', margin)
-        margin += 50
-    }
+const visualizeBoard = margin => { 
+    let coord = 0; then; do {
+        drawLine('horizontal', coord), drawLine('vertical', coord)
+        coord += 550/margin
+    } while (coord <= 550)
 }
 /*------------Board Visualizing Animation------------*/
 
@@ -20,10 +19,12 @@ const makeBoard = (rownum, colnum) => {
         }
     }   
     //Then doubly link all the nodes to each other by using their name properties
-    for(let x = 1; x <= rownum; x++){
-        for(let y = 1; y <= colnum; y++){
-            nodeAt(x, y).left  = nodeAt(x, y-1)
-            nodeAt(x, y).right = nodeAt(x, y+1)
+    for(let x = 1; x <= rownum; x++) {
+        for(let y = 1; y <= colnum; y++) {
+            nodeAt(x, y).left  = nodeAt(x, y-1), nodeAt(x, y).right = nodeAt(x, y+1)
+            nodeAt(x, y).up    = nodeAt(x-1, y), nodeAt(x, y).down  = nodeAt(x+1, y)
+            nodeAt(x, y).bottomLeft = nodeAt(x+1, y-1), nodeAt(x, y).bottomRight = nodeAt(x+1, y+1)
+            nodeAt(x, y).topLeft = nodeAt(x-1, y-1), nodeAt(x, y).topRight = nodeAt(x-1, y+1)
         }
     }
 }
@@ -36,7 +37,7 @@ const drawLine = (hOrV, margin) => {
         ctx.beginPath()
         line = line < 550? line + speed: line
         ctx.lineWidth = 0.5, ctx.strokeStyle = '#e5e5e5'
-        if (hOrV === 'horizontal') {
+        if (hOrV === 'horizontal') { 
             ctx.moveTo(0, margin + 25)
             ctx.lineTo(line, margin + 25)
         }
