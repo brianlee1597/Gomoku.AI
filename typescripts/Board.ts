@@ -46,7 +46,7 @@ const drawLine = (hOrV: string, margin: number) => {
             ctx.lineTo(margin + 25, line)
         }
         ctx.stroke()
-        window.requestAnimationFrame(drawTheLine)
+        requestAnimationFrame(drawTheLine)
     }
-    window.requestAnimationFrame(drawTheLine)
+    requestAnimationFrame(drawTheLine)
 }
