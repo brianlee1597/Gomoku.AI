@@ -4,6 +4,9 @@ const context = stoneCanvas.getContext('2d')
 const playOneRound = onClick => {
     getRoundedXY(stoneCanvas, onClick)
 
+    if(x < 0 || x > 550 || y < 0 || y > 550)
+        return
+
     let rownum = (y+25)/50, colnum = (x+25)/50
     then, clickedNode = nodeAt(rownum, colnum)
 
@@ -23,6 +26,9 @@ const getRoundedXY = (canvas, onClick) => {
     const rect = canvas.getBoundingClientRect()
     x = onClick.clientX - rect.left
     y = onClick.clientY - rect.top 
+
+    if(x < 0 || x > 550 || y < 0 || y > 550)
+        return
 
     const firstDigitsX = ~~(x/100), lastTwoDigitX = +("" + (~~(x/10)%10) + (x%10) <= 50? 25: 75)
     const firstDigitsY = ~~(y/100), lastTwoDigitY = +("" + (~~(y/10)%10) + (y%10) <= 50? 25: 75)
