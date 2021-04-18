@@ -17,7 +17,7 @@ const playOneRound = onClick => {
         clickedNode.data, clickedNode.color  = playerStoneColor
         youPlaceStone(x, y), then, AIPlaceStone()
     }
-    console.log(clickedNode.name + ": " + clickedNode.data)  
+    console.log(clickedNode.name)  
 }
 
 //Helper Functions
