@@ -24,8 +24,8 @@ var getRoundedXY = function (canvas, onClick) {
     y = onClick.clientY - rect.top;
     if (x < 0 || x > 550 || y < 0 || y > 550)
         return;
-    var firstDigitsX = ~~(x / 100), lastTwoDigitX = +(+("" + (~~(x / 10) % 10) + (x % 10)) <= 50 ? 25 : 75);
-    var firstDigitsY = ~~(y / 100), lastTwoDigitY = +(+("" + (~~(y / 10) % 10) + (y % 10)) <= 50 ? 25 : 75);
+    var firstDigitsX = ~~(x / 100), lastTwoDigitX = (+("" + (~~(x / 10) % 10) + (x % 10)) <= 50 ? 25 : 75);
+    var firstDigitsY = ~~(y / 100), lastTwoDigitY = (+("" + (~~(y / 10) % 10) + (y % 10)) <= 50 ? 25 : 75);
     x = +("" + firstDigitsX + lastTwoDigitX);
     y = +("" + firstDigitsY + lastTwoDigitY);
 };

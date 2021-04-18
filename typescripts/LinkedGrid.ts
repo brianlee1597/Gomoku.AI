@@ -1,20 +1,19 @@
 class LinkedGrid {
 
-    x: number;
-    y: number;
-    name: string;
-    stone: boolean;
-    score: number;
-    color: string;
-    topLeft: LinkedGrid | void;
-    up: LinkedGrid | void;
-    topRight: LinkedGrid | void;
-    left: LinkedGrid | void;
-    right: LinkedGrid | void;
-    bottomLeft: LinkedGrid | void;
-    down: LinkedGrid | void;
-    bottomRight: LinkedGrid | void;
-
+    x: number
+    y: number
+    name: string
+    stone: boolean
+    score: number
+    color: string
+    topLeft: LinkedGrid | void
+    up: LinkedGrid | void
+    topRight: LinkedGrid | void
+    left: LinkedGrid | void
+    right: LinkedGrid | void
+    bottomLeft: LinkedGrid | void
+    down: LinkedGrid | void
+    bottomRight: LinkedGrid | void
 
     constructor (x: number, y: number) 
     {
@@ -76,8 +75,8 @@ const nodeAt = (x: number,y: number): LinkedGrid => {
 }
 
 const clearAllScore = (): void => {
-    for(let x = 1; x <= 11; x++){
-        for(let y = 1; y <= 11; y++){
+    for(let x: number = 1; x <= 11; x++){
+        for(let y: number = 1; y <= 11; y++){
             nodeAt(x ,y).score = 0
         }
     }

@@ -81,7 +81,7 @@ const clearCanvas = (dir: string): void => {
                     } break
             }
         }, 50)
-    }; clearCol(i + 50) // i+50 = clears 1 column at a time each loop
+    }; clearCol(i) // clears 1 column at a time each loop
 }
 
 const toggleVis = (): void => {

@@ -90,7 +90,7 @@ var clearCanvas = function (dir) {
             }
         }, 50);
     };
-    clearCol(i + 50); // i+50 = clears 1 column at a time each loop
+    clearCol(i); // clears 1 column at a time each loop
 };
 var toggleVis = function () {
     visualAI = visualAI === false ? true : false;
