@@ -7,6 +7,7 @@ class LinkedGrid {
         this.name  = "Node at ("+ "Row " + x + ", Col " + y + ")"
         this.stone = false
         this.score = 0
+        this.color = null
 
         this.topLeft    =  this.up     =  this.topRight     = null
 //                    \        |        /
@@ -37,6 +38,7 @@ class LinkedGrid {
               :dir === 'right'? this.right
               :console.log('Error on to(dir): input is ' + dir)
     }
+    colorIs = i => i === this.color? true: false
 }
 
 const nodeAt = (x,y) => {
