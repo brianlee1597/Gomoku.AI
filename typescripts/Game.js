@@ -2,32 +2,32 @@
 var stoneCanvas = document.getElementById('placeStoneLayer');
 var context = stoneCanvas.getContext('2d');
 var playOneRound = function (onClick) {
-    getRoundedXY(stoneCanvas, onClick);
+    var RECT = stoneCanvas.getBoundingClientRect();
+    x = onClick.clientX - RECT.left;
+    y = onClick.clientY - RECT.top;
     if (x < 0 || x > 550 || y < 0 || y > 550)
         return;
-    var rownum = (y + 25) / 50, colnum = (x + 25) / 50;
-    var clickedNode = nodeAt(rownum, colnum);
-    if (clickedNode === undefined)
-        return;
-    if (!clickedNode.hasStone()) {
-        clickedNode.stone = true;
-        clickedNode.color = playerStoneColor;
-        youPlaceStone(x, y);
-        AIPlaceStone();
+    try {
+        getRoundedXY();
+        var ROW_NUM = (y + 25) / 50, COL_NUM = (x + 25) / 50, CLICKED_NODE = nodeAt(ROW_NUM, COL_NUM);
+        if (!CLICKED_NODE.hasStone()) {
+            CLICKED_NODE.stone = true;
+            CLICKED_NODE.color = playerStoneColor;
+            youPlaceStone(x, y);
+            AIPlaceStone();
+        }
+        x = null, y = null;
     }
-    console.log(clickedNode.name);
+    catch (e) {
+        console.log(e);
+    }
 };
 //Helper Functions
-var getRoundedXY = function (canvas, onClick) {
-    var rect = canvas.getBoundingClientRect();
-    x = onClick.clientX - rect.left;
-    y = onClick.clientY - rect.top;
-    if (x < 0 || x > 550 || y < 0 || y > 550)
-        return;
-    var firstDigitsX = ~~(x / 100), lastTwoDigitX = (+("" + (~~(x / 10) % 10) + (x % 10)) <= 50 ? 25 : 75);
-    var firstDigitsY = ~~(y / 100), lastTwoDigitY = (+("" + (~~(y / 10) % 10) + (y % 10)) <= 50 ? 25 : 75);
-    x = +("" + firstDigitsX + lastTwoDigitX);
-    y = +("" + firstDigitsY + lastTwoDigitY);
+var getRoundedXY = function () {
+    var FIRST_DIGITS_X = Math.floor(x / 100), LAST_TWO_ROUNDED_X = parseInt("" + ~~(x / 10) % 10 + x % 10) <= 50 ? 25 : 75;
+    var FIRST_DIGITS_Y = Math.floor(y / 100), LAST_TWO_ROUNDED_Y = parseInt("" + ~~(y / 10) % 10 + y % 10) <= 50 ? 25 : 75;
+    x = parseInt("" + FIRST_DIGITS_X + LAST_TWO_ROUNDED_X);
+    y = parseInt("" + FIRST_DIGITS_Y + LAST_TWO_ROUNDED_Y);
 };
 var youPlaceStone = function (x, y) {
     context.beginPath();

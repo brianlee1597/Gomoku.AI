@@ -12,69 +12,69 @@ var AIPlaceStone = function () {
 };
 var scanBoard = function () {
     var i = 1;
-    var dir = dirArr[~~(Math.random() * 4)];
-    if (dir === 'up')
+    var POINTER = POINTER_ARRAY[~~(Math.random() * 4)];
+    if (POINTER === 'up')
         do {
-            scan(nodeAt(11, i++), dir);
+            scan(nodeAt(11, i++), POINTER);
         } while (i <= 11);
-    else if (dir === 'down')
+    else if (POINTER === 'down')
         do {
-            scan(nodeAt(1, i++), dir);
+            scan(nodeAt(1, i++), POINTER);
         } while (i <= 11);
-    else if (dir === 'left')
+    else if (POINTER === 'left')
         do {
-            scan(nodeAt(i++, 11), dir);
+            scan(nodeAt(i++, 11), POINTER);
         } while (i <= 11);
-    else if (dir === 'right')
+    else if (POINTER === 'right')
         do {
-            scan(nodeAt(i++, 1), dir);
+            scan(nodeAt(i++, 1), POINTER);
         } while (i <= 11);
     else
-        throw new Error("Error on Bot.ts / scanBoard: dir array has invalid value");
+        throw new Error("Error on Bot.ts / scanBoard: pointer array has invalid value");
 };
-var scan = function (node, dir) {
+var scan = function (node, POINTER) {
     var scanEachColumn = function () {
         setTimeout(function () {
             highlight(node);
-            if (!node.has(dir)) {
-                clearCanvas(dir);
+            if (!node.has(POINTER)) {
+                clearCanvas(POINTER);
                 return;
             }
-            node = node.to(dir);
+            node = node.to(POINTER);
             scanEachColumn();
         }, 50);
     };
     scanEachColumn();
 };
-var highlight = function (node) {
-    if (node.hasStone())
+var highlight = function (NODE) {
+    if (NODE.hasStone())
         return;
-    var x = coordinateOf(node.y), y = coordinateOf(node.x), fill = function (canvas, color) {
+    var x = coordinateOf(NODE.y), y = coordinateOf(NODE.x), fill = function (canvas, color) {
         canvas.beginPath();
         canvas.arc(x, y, 3, 0, 2 * Math.PI, false);
         canvas.fillStyle = color;
         canvas.fill();
     };
-    if (node.hasScore())
-        fill(highlightCtx, colorBy(node.score));
+    if (NODE.hasScore())
+        fill(highlightCtx, colorBy(NODE.score));
     else
         fill(AIContext, 'red');
 };
-var clearCanvas = function (dir) {
+var clearCanvas = function (POINTER) {
     var i;
-    if (dir === 'right' || dir === 'down')
+    if (POINTER === 'right' || POINTER === 'down')
         i = 0;
-    else if (dir === 'left' || dir === 'up')
+    else if (POINTER === 'left' || POINTER === 'up')
         i = 550;
     else
-        throw new Error('Error on Bot.ts / clearCanvas(): input is ' + dir);
+        throw new Error('Error on Bot.ts / clearCanvas(): input is ' + POINTER);
     var clearCol = function (i) {
         setTimeout(function () {
-            switch (dir) {
+            switch (POINTER) {
                 case 'right':
                 case 'down':
                     if (i <= 550) {
-                        dir === 'right' ? AIContext.clearRect(0, 0, i, 550)
+                        POINTER === 'right' ? AIContext.clearRect(0, 0, i, 550)
                             : AIContext.clearRect(0, 0, 550, i);
                         clearCol(i + 50);
                     }
@@ -82,7 +82,7 @@ var clearCanvas = function (dir) {
                 case 'up':
                 case 'left':
                     if (i >= 0) {
-                        dir === 'up' ? AIContext.clearRect(0, i, 550, 50)
+                        POINTER === 'up' ? AIContext.clearRect(0, i, 550, 50)
                             : AIContext.clearRect(i, 0, 50, 550);
                         clearCol(i - 50);
                     }
@@ -94,8 +94,11 @@ var clearCanvas = function (dir) {
 };
 var toggleVis = function () {
     visualAI = visualAI === false ? true : false;
-    var vizAlert = document.querySelector('p').classList;
-    vizAlert.contains('hidden') ? vizAlert.remove('hidden') : vizAlert.add('hidden');
+    var visual_text = document.querySelector('p').classList;
+    if (visual_text.contains('hidden'))
+        visual_text.remove('hidden');
+    else
+        visual_text.add('hidden');
 };
-var coordinateOf = function (xOrY) { return xOrY * 25 + (25 * (xOrY - 1)); };
-var dirArr = ['up', 'down', 'right', 'left'];
+var coordinateOf = function (X_OR_Y) { return X_OR_Y * 25 + (25 * (X_OR_Y - 1)); };
+var POINTER_ARRAY = ['up', 'down', 'right', 'left'];

@@ -19,11 +19,12 @@ var makeBoard = function (margin) {
                 nodeAt(x_2, y_2).topLeft = nodeAt(x_2 - 1, y_2 - 1), nodeAt(x_2, y_2).topRight = nodeAt(x_2 - 1, y_2 + 1);
             }
         }
-        var coord = 0;
+        //draw the lines on canvas
+        var coordinate = 0;
         do {
-            drawLine('horizontal', coord), drawLine('vertical', coord);
-            coord += 550 / margin;
-        } while (coord <= 550);
+            drawLine('horizontal', coordinate);
+            drawLine('vertical', coordinate);
+        } while ((coordinate += 550 / margin) <= 550);
     }
     catch (e) {
         console.log(e);

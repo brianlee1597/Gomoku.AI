@@ -1,4 +1,4 @@
-const playingField = document.getElementById('placeStoneLayer')
+var playingField = document.getElementById('placeStoneLayer')
 const on = playingField.addEventListener
 const whateverPlayerChose = '#457b9d'
 

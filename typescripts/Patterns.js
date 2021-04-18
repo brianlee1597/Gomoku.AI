@@ -83,7 +83,7 @@ var checkForAdjacent = function () {
         }
     }
     catch (e) {
-        throw new Error(e);
+        console.log(e);
     }
 };
 var checkForTwoInRow = function () {
@@ -102,6 +102,6 @@ var checkForTwoInRow = function () {
         }
     }
     catch (e) {
-        throw new Error(e);
+        console.log(e);
     }
 };

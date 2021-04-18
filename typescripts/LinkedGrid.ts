@@ -35,8 +35,8 @@ class LinkedGrid {
     isEmpty  = (): boolean => this.stone === false
     hasStone = (): boolean => this.stone === true
     hasScore = (): boolean => this.score !== 0
-    has = (pointer: string): boolean | void => {
-        switch (pointer) {
+    has = (POINTER: string): boolean | void => {
+        switch (POINTER) {
             case 'up':
                 return this.up !== undefined
             case 'down':
@@ -54,18 +54,18 @@ class LinkedGrid {
             case 'bottomRight':
                 return this.bottomRight !== undefined
         }
-        throw new Error('Error on LinkedGrid / has: ' + pointer + ' doesnt exist on LinkedGrid')
+        throw new Error('LinkedGrid / has() Line 38: illegal pointer argument')
     }
-    to = (dir: string): LinkedGrid | void => {
-        if (dir === 'up') 
+    to = (POINTER: string): LinkedGrid | void => {
+        if (POINTER === 'up') 
             return this.up
-        if (dir === 'down') 
+        if (POINTER === 'down') 
             return this.down
-        if (dir === 'left') 
+        if (POINTER === 'left') 
             return this.left
-        if (dir === 'right') 
+        if (POINTER === 'right') 
             return this.right
-        throw new Error("Error on LinkedGrid.js Line 50: No matching dir")
+        throw new Error("LinkedGrid.js to() Line 59: illegal pointer parameter")
     }
     colorIs = (i: string): boolean => i === this.color? true: false
 }

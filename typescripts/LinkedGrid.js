@@ -6,8 +6,8 @@ var LinkedGrid = /** @class */ (function () {
         this.isEmpty = function () { return _this.stone === false; };
         this.hasStone = function () { return _this.stone === true; };
         this.hasScore = function () { return _this.score !== 0; };
-        this.has = function (pointer) {
-            switch (pointer) {
+        this.has = function (POINTER) {
+            switch (POINTER) {
                 case 'up':
                     return _this.up !== undefined;
                 case 'down':
@@ -25,18 +25,18 @@ var LinkedGrid = /** @class */ (function () {
                 case 'bottomRight':
                     return _this.bottomRight !== undefined;
             }
-            throw new Error('Error on LinkedGrid / has: ' + pointer + ' doesnt exist on LinkedGrid');
+            throw new Error('LinkedGrid / has() Line 38: illegal pointer argument');
         };
-        this.to = function (dir) {
-            if (dir === 'up')
+        this.to = function (POINTER) {
+            if (POINTER === 'up')
                 return _this.up;
-            if (dir === 'down')
+            if (POINTER === 'down')
                 return _this.down;
-            if (dir === 'left')
+            if (POINTER === 'left')
                 return _this.left;
-            if (dir === 'right')
+            if (POINTER === 'right')
                 return _this.right;
-            throw new Error("Error on LinkedGrid.js Line 50: No matching dir");
+            throw new Error("LinkedGrid.js to() Line 59: illegal pointer parameter");
         };
         this.colorIs = function (i) { return i === _this.color ? true : false; };
         this.x = x;

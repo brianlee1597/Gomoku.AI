@@ -1,29 +1,31 @@
-const canvas = <HTMLCanvasElement> document.getElementById('boardUILayer')
-const ctx = <CanvasRenderingContext2D> canvas.getContext('2d')
+var canvas = <HTMLCanvasElement> document.getElementById('boardUILayer')
+var ctx = <CanvasRenderingContext2D> canvas.getContext('2d')
 
 /*------------Make Board Grid with LinkedGrid------------*/
 const makeBoard = (margin: number): void => {
     try{
         //Make x*y amount of nodes and name them nodeAt + coordinate
-        for (let x: number = 1; x <= margin; x++) {
-            for (let y: number = 1; y <= margin; y++) {
+        for (let x = 1; x <= margin; x++) {
+            for (let y= 1; y <= margin; y++) {
                 window['nodeAt' + x + 'x' + y] = new LinkedGrid(x, y)
             }
         }
         //Then doubly link all the nodes to each other by using their name properties
-        for (let x: number = 1; x <= margin; x++) {
-            for (let y: number = 1; y <= margin; y++) {
+        for (let x = 1; x <= margin; x++) {
+            for (let y = 1; y <= margin; y++) {
                 nodeAt(x, y).left = nodeAt(x, y - 1), nodeAt(x, y).right = nodeAt(x, y + 1)
-                nodeAt(x, y).up = nodeAt(x - 1, y), nodeAt(x, y).down = nodeAt(x + 1, y)
+                nodeAt(x, y).up   = nodeAt(x - 1, y), nodeAt(x, y).down  = nodeAt(x + 1, y)
                 nodeAt(x, y).bottomLeft = nodeAt(x + 1, y - 1), nodeAt(x, y).bottomRight = nodeAt(x + 1, y + 1)
-                nodeAt(x, y).topLeft = nodeAt(x - 1, y - 1), nodeAt(x, y).topRight = nodeAt(x - 1, y + 1)
+                nodeAt(x, y).topLeft    = nodeAt(x - 1, y - 1), nodeAt(x, y).topRight    = nodeAt(x - 1, y + 1)
             }
         }
-        let coord: number = 0
+        //draw the lines on canvas
+        let coordinate = 0
         do {
-            drawLine('horizontal', coord), drawLine('vertical', coord)
-            coord += 550 / margin
-        } while (coord <= 550)
+            drawLine( 'horizontal', coordinate )
+            drawLine( 'vertical',   coordinate )
+        } while ( (coordinate += 550 / margin) <= 550)
+
     } catch (e){
         console.log(e)
     }

@@ -82,7 +82,7 @@ const checkForAdjacent = (): void => {
             }
         }
     } catch (e){
-        throw new Error(e)
+        console.log(e)
     }
 }
 
@@ -101,6 +101,6 @@ const checkForTwoInRow = (): void => {
             }
         }
     } catch (e) {
-        throw new Error(e)
+        console.log(e)
     }
 }
