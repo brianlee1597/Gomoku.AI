@@ -5,50 +5,54 @@ const AIPlaceStone = (): void => {
     if (visualAI) {
         checkForAdjacent()
         checkForTwoInRow()
-        scanBoard()
+        highlightBoard()
         highlightCtx.clearRect(0, 0, 550, 550)
         setTimeout(clearAllScore, 1000)
     }
 }
 
-const scanBoard = (): void => { //move to ai
-    let i: number = 1
-    const POINTER: string = POINTER_ARRAY[~~(Math.random() * 4)]
+const highlightBoard = (): void => { //move to ai
+    let i: number = 1, randomKey = ~~(Math.random() * 4 + 1)
+    const POINTER: string = POINTER_MAP.get(randomKey)
+
     if (POINTER === 'up')
-        do { scan(nodeAt(11, i++), POINTER) } while (i <= 11)
+        do { highlight(nodeAt(11, i++), POINTER) } while (i <= 11)
     else if (POINTER === 'down')
-        do { scan(nodeAt(1, i++),  POINTER) } while (i <= 11)
+        do { highlight(nodeAt(1, i++),  POINTER) } while (i <= 11)
     else if (POINTER === 'left')
-        do { scan(nodeAt(i++, 11), POINTER) } while (i <= 11)
+        do { highlight(nodeAt(i++, 11), POINTER) } while (i <= 11)
     else if (POINTER === 'right')
-        do { scan(nodeAt(i++, 1),  POINTER) } while (i <= 11)
+        do { highlight(nodeAt(i++, 1),  POINTER) } while (i <= 11)
     else
-        throw new Error("Error on Bot.ts / scanBoard: pointer array has invalid value")
+        throw new Error("Error on Bot.ts / scanBoard: pointer map has invalid value: " + randomKey)
 }
 
-const scan = (node: LinkedGrid | any, POINTER: string): void => {
-    let scanEachColumn = (): void => {
+const highlight = (node: LinkedNode | any, POINTER: string): void => {
+    let scanEachColumn = (): void => { 
         setTimeout(() => {
-            highlight(node)
-            if (!node.has(POINTER)) {
+            let x: number = coordinateOf(node.y), 
+                y: number = coordinateOf(node.x)
+
+            twinkle(node, x, y)
+
+            if (!node.has(POINTER)){
                 clearCanvas(POINTER)
-                return
             }
-            node = node.to(POINTER)
-            scanEachColumn()
+            else{
+                node = node.to(POINTER)
+                scanEachColumn()
+            }
         }, 50)
     }; scanEachColumn()
 }
 
-const highlight = (NODE: LinkedGrid): void => {
+const twinkle = (NODE: LinkedNode, X: number, Y: number): void => {
     if (NODE.hasStone())
         return
-    let x: number = coordinateOf(NODE.y), 
-        y: number = coordinateOf(NODE.x),
 
-    fill = (canvas: CanvasRenderingContext2D, color: string) => {
+    const fill = (canvas: CanvasRenderingContext2D, color: string) => {
         canvas.beginPath()
-        canvas.arc(x, y, 3, 0, 2 * Math.PI, false)
+        canvas.arc(X, Y, 3, 0, 2 * Math.PI, false)
         canvas.fillStyle = color
         canvas.fill()
     }
@@ -98,4 +102,9 @@ const toggleVis = (): void => {
 }
 
 const coordinateOf = (X_OR_Y: number): number => X_OR_Y * 25 + (25 * (X_OR_Y - 1))
-const POINTER_ARRAY: string[] = ['up', 'down', 'right', 'left']
+const POINTER_MAP: Map<number, string> = new Map([
+    [1, 'up'],
+    [2, 'down'],
+    [3, 'left'],
+    [4, 'right']
+])

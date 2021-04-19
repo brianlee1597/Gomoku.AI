@@ -1,9 +1,13 @@
 "use strict";
 var highlightCanvas = document.getElementById('scoredNodeHighlightLayer');
 var highlightCtx = highlightCanvas.getContext('2d');
-var ARRAY_OF_COLORS = ['transparent', 'red', 'blue', 'green', 'violet', 'yellow', 'grey', 'black'];
-var colorBy = function (score) {
-    if (score < ARRAY_OF_COLORS.length)
-        return ARRAY_OF_COLORS[score];
-    throw new Error("error on ColorBy: score is out of Array Bounds");
+const ARRAY_OF_COLORS = new Map([
+    [0, 'transparent'], [1, 'red'], [2, 'blue'],
+    [3, 'green'], [4, 'violet'], [5, 'yellow'],
+    [6, 'grey'], [7, 'black'], [8, 'orange']
+]);
+const colorBy = (score) => {
+    if (ARRAY_OF_COLORS.has(score))
+        return ARRAY_OF_COLORS.get(score);
+    throw new Error("error on ColorBy: score is out of bounds");
 };

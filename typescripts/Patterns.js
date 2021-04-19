@@ -1,9 +1,9 @@
 "use strict";
 //patterns or spaghetti?
-var checkForAdjacent = function () {
+const checkForAdjacent = () => {
     try {
-        var node = void 0;
-        for (var i = 1; i <= 11; i++) {
+        let node;
+        for (let i = 1; i <= 11; i++) {
             node = nodeAt(i, 1);
             while (node.has('right')) {
                 if (node.right.hasStone() && !node.hasStone())
@@ -53,7 +53,7 @@ var checkForAdjacent = function () {
                 node = node.topLeft;
             }
         }
-        for (var i = 2; i <= 11; i++) {
+        for (let i = 2; i <= 11; i++) {
             node = nodeAt(i, 11);
             while (node.has('bottomLeft')) {
                 if (node.bottomLeft.hasStone() && !node.hasStone())
@@ -73,7 +73,7 @@ var checkForAdjacent = function () {
                 node = node.bottomRight;
             }
         }
-        for (var i = 10; i >= 1; i--) {
+        for (let i = 10; i >= 1; i--) {
             node = nodeAt(i, 11);
             while (node.has('topLeft')) {
                 if (node.topLeft.hasStone() && !node.hasStone())
@@ -86,10 +86,10 @@ var checkForAdjacent = function () {
         console.log(e);
     }
 };
-var checkForTwoInRow = function () {
+const checkForTwoInRow = () => {
     try {
-        var node = void 0;
-        for (var i = 1; i <= 11; i++) {
+        let node;
+        for (let i = 1; i <= 11; i++) {
             node = nodeAt(i, 1);
             while (node.has('right')) {
                 if (node.hasStone() && node.right.hasStone()

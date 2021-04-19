@@ -1,57 +1,59 @@
 "use strict";
 var AICanvas = document.getElementById('botScanLayer');
 var AIContext = AICanvas.getContext('2d');
-var AIPlaceStone = function () {
+const AIPlaceStone = () => {
     if (visualAI) {
         checkForAdjacent();
         checkForTwoInRow();
-        scanBoard();
+        highlightBoard();
         highlightCtx.clearRect(0, 0, 550, 550);
         setTimeout(clearAllScore, 1000);
     }
 };
-var scanBoard = function () {
-    var i = 1;
-    var POINTER = POINTER_ARRAY[~~(Math.random() * 4)];
+const highlightBoard = () => {
+    let i = 1, randomKey = ~~(Math.random() * 4 + 1);
+    const POINTER = POINTER_MAP.get(randomKey);
     if (POINTER === 'up')
         do {
-            scan(nodeAt(11, i++), POINTER);
+            highlight(nodeAt(11, i++), POINTER);
         } while (i <= 11);
     else if (POINTER === 'down')
         do {
-            scan(nodeAt(1, i++), POINTER);
+            highlight(nodeAt(1, i++), POINTER);
         } while (i <= 11);
     else if (POINTER === 'left')
         do {
-            scan(nodeAt(i++, 11), POINTER);
+            highlight(nodeAt(i++, 11), POINTER);
         } while (i <= 11);
     else if (POINTER === 'right')
         do {
-            scan(nodeAt(i++, 1), POINTER);
+            highlight(nodeAt(i++, 1), POINTER);
         } while (i <= 11);
     else
-        throw new Error("Error on Bot.ts / scanBoard: pointer array has invalid value");
+        throw new Error("Error on Bot.ts / scanBoard: pointer map has invalid value: " + randomKey);
 };
-var scan = function (node, POINTER) {
-    var scanEachColumn = function () {
-        setTimeout(function () {
-            highlight(node);
+const highlight = (node, POINTER) => {
+    let scanEachColumn = () => {
+        setTimeout(() => {
+            let x = coordinateOf(node.y), y = coordinateOf(node.x);
+            twinkle(node, x, y);
             if (!node.has(POINTER)) {
                 clearCanvas(POINTER);
-                return;
             }
-            node = node.to(POINTER);
-            scanEachColumn();
+            else {
+                node = node.to(POINTER);
+                scanEachColumn();
+            }
         }, 50);
     };
     scanEachColumn();
 };
-var highlight = function (NODE) {
+const twinkle = (NODE, X, Y) => {
     if (NODE.hasStone())
         return;
-    var x = coordinateOf(NODE.y), y = coordinateOf(NODE.x), fill = function (canvas, color) {
+    const fill = (canvas, color) => {
         canvas.beginPath();
-        canvas.arc(x, y, 3, 0, 2 * Math.PI, false);
+        canvas.arc(X, Y, 3, 0, 2 * Math.PI, false);
         canvas.fillStyle = color;
         canvas.fill();
     };
@@ -60,16 +62,16 @@ var highlight = function (NODE) {
     else
         fill(AIContext, 'red');
 };
-var clearCanvas = function (POINTER) {
-    var i;
+const clearCanvas = (POINTER) => {
+    let i;
     if (POINTER === 'right' || POINTER === 'down')
         i = 0;
     else if (POINTER === 'left' || POINTER === 'up')
         i = 550;
     else
         throw new Error('Error on Bot.ts / clearCanvas(): input is ' + POINTER);
-    var clearCol = function (i) {
-        setTimeout(function () {
+    let clearCol = (i) => {
+        setTimeout(() => {
             switch (POINTER) {
                 case 'right':
                 case 'down':
@@ -92,13 +94,18 @@ var clearCanvas = function (POINTER) {
     };
     clearCol(i); // clears 1 column at a time each loop
 };
-var toggleVis = function () {
+const toggleVis = () => {
     visualAI = visualAI === false ? true : false;
-    var visual_text = document.querySelector('p').classList;
+    let visual_text = document.querySelector('p').classList;
     if (visual_text.contains('hidden'))
         visual_text.remove('hidden');
     else
         visual_text.add('hidden');
 };
-var coordinateOf = function (X_OR_Y) { return X_OR_Y * 25 + (25 * (X_OR_Y - 1)); };
-var POINTER_ARRAY = ['up', 'down', 'right', 'left'];
+const coordinateOf = (X_OR_Y) => X_OR_Y * 25 + (25 * (X_OR_Y - 1));
+const POINTER_MAP = new Map([
+    [1, 'up'],
+    [2, 'down'],
+    [3, 'left'],
+    [4, 'right']
+]);

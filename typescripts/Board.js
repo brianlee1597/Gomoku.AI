@@ -2,38 +2,33 @@
 var canvas = document.getElementById('boardUILayer');
 var ctx = canvas.getContext('2d');
 /*------------Make Board Grid with LinkedGrid------------*/
-var makeBoard = function (margin) {
-    try {
-        //Make x*y amount of nodes and name them nodeAt + coordinate
-        for (var x_1 = 1; x_1 <= margin; x_1++) {
-            for (var y_1 = 1; y_1 <= margin; y_1++) {
-                window['nodeAt' + x_1 + 'x' + y_1] = new LinkedGrid(x_1, y_1);
-            }
+const makeBoard = (margin) => {
+    //Make x*y amount of nodes and name them nodeAt + coordinate
+    for (let x = 1; x <= margin; x++) {
+        for (let y = 1; y <= margin; y++) {
+            window['nodeAt' + x + 'x' + y] = new LinkedNode(x, y);
         }
-        //Then doubly link all the nodes to each other by using their name properties
-        for (var x_2 = 1; x_2 <= margin; x_2++) {
-            for (var y_2 = 1; y_2 <= margin; y_2++) {
-                nodeAt(x_2, y_2).left = nodeAt(x_2, y_2 - 1), nodeAt(x_2, y_2).right = nodeAt(x_2, y_2 + 1);
-                nodeAt(x_2, y_2).up = nodeAt(x_2 - 1, y_2), nodeAt(x_2, y_2).down = nodeAt(x_2 + 1, y_2);
-                nodeAt(x_2, y_2).bottomLeft = nodeAt(x_2 + 1, y_2 - 1), nodeAt(x_2, y_2).bottomRight = nodeAt(x_2 + 1, y_2 + 1);
-                nodeAt(x_2, y_2).topLeft = nodeAt(x_2 - 1, y_2 - 1), nodeAt(x_2, y_2).topRight = nodeAt(x_2 - 1, y_2 + 1);
-            }
+    }
+    //Then doubly link all the nodes to each other by using their name properties
+    for (let x = 1; x <= margin; x++) {
+        for (let y = 1; y <= margin; y++) {
+            nodeAt(x, y).left = nodeAt(x, y - 1), nodeAt(x, y).right = nodeAt(x, y + 1);
+            nodeAt(x, y).up = nodeAt(x - 1, y), nodeAt(x, y).down = nodeAt(x + 1, y);
+            nodeAt(x, y).bottomLeft = nodeAt(x + 1, y - 1), nodeAt(x, y).bottomRight = nodeAt(x + 1, y + 1);
+            nodeAt(x, y).topLeft = nodeAt(x - 1, y - 1), nodeAt(x, y).topRight = nodeAt(x - 1, y + 1);
         }
-        //draw the lines on canvas
-        var coordinate = 0;
-        do {
-            drawLine('horizontal', coordinate);
-            drawLine('vertical', coordinate);
-        } while ((coordinate += 550 / margin) <= 550);
     }
-    catch (e) {
-        console.log(e);
-    }
+    //draw the lines on canvas
+    let coordinate = 0;
+    do {
+        drawLine('horizontal', coordinate);
+        drawLine('vertical', coordinate);
+    } while ((coordinate += 550 / margin) <= 550);
 };
 /*------------Make Board Grid with LinkedGrid------------*/
-var line = 0, speed = 0.25;
-var drawLine = function (hOrV, margin) {
-    var drawTheLine = function () {
+let line = 0, speed = 0.25;
+const drawLine = (hOrV, margin) => {
+    const drawTheLine = () => {
         ctx.beginPath();
         line = line < 550 ? line + speed : line;
         ctx.lineWidth = 0.5, ctx.strokeStyle = '#e5e5e5';
