@@ -14,7 +14,7 @@ const playOneRound = (onClick: MouseEvent): void => {
 
         const ROW_NUM: number = (y+25)/50, 
               COL_NUM: number = (x+25)/50,
-         CLICKED_NODE: LinkedNode = nodeAt(ROW_NUM, COL_NUM)
+              CLICKED_NODE: LinkedNode = nodeAt(ROW_NUM, COL_NUM)
     
         if (CLICKED_NODE.isEmpty()) {
             CLICKED_NODE.stone  = true
@@ -23,7 +23,6 @@ const playOneRound = (onClick: MouseEvent): void => {
             AIPlaceStone()
         }
         x= null, y = null
-
     } catch (e) {
         console.log(e)
     }

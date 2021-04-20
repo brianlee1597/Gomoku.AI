@@ -8,6 +8,15 @@ let playerStoneColor: string = whateverPlayerChose,
     AIStoneColor: string = whateverPlayerChose == '#457b9d' ? '#f1faee' : '#457b9d'
 
 makeBoard(11)
-on('mousedown', playOneRound)
+on('mousedown', function (e: MouseEvent): void {
+    const RECT: DOMRect = playingField.getBoundingClientRect()
+    x = e.clientX - RECT.left
+    y = e.clientY - RECT.top 
+
+    if( x < 0 || x > 550 || y < 0 || y > 550 ) 
+        return
+    
+    playOneRound(e)
+})
 
 /*if(5InRow) endGame()*/
