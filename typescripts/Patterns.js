@@ -94,7 +94,7 @@ const checkForTwoInRow = () => {
             while (node.has('right')) {
                 if (node.hasStone() && node.right.hasStone()
                     && node.colorIs(playerStoneColor) && node.right.colorIs(playerStoneColor)) {
-                    if (node.left !== null && !node.left.hasStone())
+                    if (node.left !== null && node.left.isEmpty())
                         node.left.score += 2;
                 }
                 node = node.right;

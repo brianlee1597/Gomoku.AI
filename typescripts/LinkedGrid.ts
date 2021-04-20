@@ -2,6 +2,8 @@ class LinkedNode {
 
     x: number
     y: number
+    coord_x: number
+    coord_y: number
     name: string
     stone: boolean
     score: number
@@ -19,6 +21,8 @@ class LinkedNode {
     {
         this.x = x
         this.y = y
+        this.coord_x = y * 25 + (25 * (y - 1))
+        this.coord_y = x * 25 + (25 * (x - 1))
         this.name  = "Node at ("+ "Row " + x + ", Col " + y + ")"
         this.stone = false
         this.score = 0
