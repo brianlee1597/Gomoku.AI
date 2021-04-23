@@ -6,7 +6,7 @@ const makeBoard = (margin: number): void => {
     //Make x*y amount of nodes and name them nodeAt + coordinate
     for (let x = 1; x <= margin; x++) {
         for (let y= 1; y <= margin; y++) {
-            window['nodeAt' + x + 'x' + y] = new LinkedNode(x, y)
+            window['nodeAt' + x + 'x' + y] = new GraphNode(x, y)
         }
     }
     //Then doubly link all the nodes to each other by using their name properties

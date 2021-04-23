@@ -27,7 +27,7 @@ const highlightBoard = (): void => { //move to ai
         throw new Error("Error on Bot.ts / scanBoard: pointer map has invalid value: " + random)
 }
 
-const highlight = (node: LinkedNode | any, POINTER: string): void => {
+const highlight = (node: GraphNode | any, POINTER: string): void => {
     let scanEachColumn = (): void => { 
         setTimeout(() => {
             twinkle(node, x, y)
@@ -42,7 +42,7 @@ const highlight = (node: LinkedNode | any, POINTER: string): void => {
     }; scanEachColumn()
 }
 
-const twinkle = (NODE: LinkedNode, X: number, Y: number): void => {
+const twinkle = (NODE: GraphNode, X: number, Y: number): void => {
     if (NODE.hasStone())
         return
 

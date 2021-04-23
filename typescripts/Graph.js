@@ -1,5 +1,5 @@
 "use strict";
-class LinkedNode {
+class GraphNode {
     constructor(x, y) {
         this.exists = () => this !== null;
         this.isEmpty = () => this.stone === false;

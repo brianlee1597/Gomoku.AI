@@ -1,4 +1,4 @@
-class LinkedNode {
+class GraphNode {
 
     x: number
     y: number
@@ -8,14 +8,14 @@ class LinkedNode {
     stone: boolean
     score: number
     color: string
-    topLeft:     LinkedNode | void
-    up:          LinkedNode | void
-    topRight:    LinkedNode | void
-    left:        LinkedNode | void
-    right:       LinkedNode | void
-    bottomLeft:  LinkedNode | void
-    down:        LinkedNode | void
-    bottomRight: LinkedNode | void
+    topLeft:     GraphNode | void
+    up:          GraphNode | void
+    topRight:    GraphNode | void
+    left:        GraphNode | void
+    right:       GraphNode | void
+    bottomLeft:  GraphNode | void
+    down:        GraphNode | void
+    bottomRight: GraphNode | void
 
     constructor (x: number, y: number) 
     {
@@ -45,12 +45,12 @@ class LinkedNode {
 
     has = (POINTER: string): boolean | void => this[POINTER] !== undefined
 
-    to  = (POINTER: string): LinkedNode | void => this[POINTER]
+    to  = (POINTER: string): GraphNode | void => this[POINTER]
 
     colorIs   = (i: string): boolean => i === this.color? true: false
 }
 
-const nodeAt = (x: number,y: number): LinkedNode => window['nodeAt' + x + 'x' + y]
+const nodeAt = (x: number,y: number): GraphNode => window['nodeAt' + x + 'x' + y]
 
 const clearAllScore = (): void => {
     for(let x: number = 1; x <= 11; x++){
