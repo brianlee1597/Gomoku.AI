@@ -1,14 +1,10 @@
 "use strict";
-var stoneCanvas = document.getElementById('placeStoneLayer');
-var context = stoneCanvas.getContext('2d');
-const playOneRound = (onClick) => {
-    const RECT = stoneCanvas.getBoundingClientRect();
-    x = onClick.clientX - RECT.left;
-    y = onClick.clientY - RECT.top;
-    if (x < 0 || x > 550 || y < 0 || y > 550)
-        return;
+const stoneCanvas = document.getElementById('placeStoneLayer');
+const context = stoneCanvas.getContext('2d');
+const playRound = (x, y) => {
     try {
-        getRoundedXY();
+        x = getRounded(x);
+        y = getRounded(y);
         const ROW_NUM = (y + 25) / 50, COL_NUM = (x + 25) / 50, CLICKED_NODE = nodeAt(ROW_NUM, COL_NUM);
         if (CLICKED_NODE.isEmpty()) {
             CLICKED_NODE.stone = true;
@@ -22,11 +18,9 @@ const playOneRound = (onClick) => {
         console.log(e);
     }
 };
-//Helper Functions
-const getRoundedXY = () => {
-    const FIRST_DIGITS_X = Math.floor(x / 100), LAST_TWO_ROUNDED_X = parseInt(`${~~(x / 10) % 10}${x % 10}`) <= 50 ? 25 : 75, FIRST_DIGITS_Y = Math.floor(y / 100), LAST_TWO_ROUNDED_Y = parseInt(`${~~(y / 10) % 10}${y % 10}`) <= 50 ? 25 : 75;
-    x = parseInt("" + FIRST_DIGITS_X + LAST_TWO_ROUNDED_X);
-    y = parseInt("" + FIRST_DIGITS_Y + LAST_TWO_ROUNDED_Y);
+const getRounded = (raw) => {
+    const FIRST_DIGITS = Math.floor(raw / 100), LAST_TWO_ROUNDED = parseInt(`${~~(raw / 10) % 10}${raw % 10}`) <= 50 ? 25 : 75;
+    return parseInt("" + FIRST_DIGITS + LAST_TWO_ROUNDED);
 };
 const youPlaceStone = (X, Y) => {
     context.beginPath();

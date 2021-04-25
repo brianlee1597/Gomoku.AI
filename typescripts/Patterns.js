@@ -1,101 +1,29 @@
 "use strict";
-//patterns or spaghetti?
-const checkForAdjacent = () => {
-    try {
-        let node;
-        for (let i = 1; i <= 11; i++) {
-            node = nodeAt(i, 1);
-            while (node.has('right')) {
-                if (node.right.hasStone() && !node.hasStone())
-                    node.score += 1;
-                node = node.right;
-            }
-            node = nodeAt(i, 11);
-            while (node.has('left')) {
-                if (node.left.hasStone() && !node.hasStone())
-                    node.score += 1;
-                node = node.left;
-            }
-            node = nodeAt(11, i);
-            while (node.has('up')) {
-                if (node.up.hasStone() && !node.hasStone())
-                    node.score += 1;
-                node = node.up;
-            }
-            node = nodeAt(1, i);
-            while (node.has('down')) {
-                if (node.down.hasStone() && !node.hasStone())
-                    node.score += 1;
-                node = node.down;
-            }
-            node = nodeAt(1, i);
-            while (node.has('bottomLeft')) {
-                if (node.bottomLeft.hasStone() && !node.hasStone())
-                    node.score += 1;
-                node = node.bottomLeft;
-            }
-            node = nodeAt(i, 1);
-            while (node.has('topRight')) {
-                if (node.topRight.hasStone() && !node.hasStone())
-                    node.score += 1;
-                node = node.topRight;
-            }
-            node = nodeAt(i, 1);
-            while (node.has('bottomRight')) {
-                if (node.bottomRight.hasStone() && !node.hasStone())
-                    node.score += 1;
-                node = node.bottomRight;
-            }
-            node = nodeAt(11, i);
-            while (node.has('topLeft')) {
-                if (node.topLeft.hasStone() && !node.hasStone())
-                    node.score += 1;
-                node = node.topLeft;
-            }
-        }
-        for (let i = 2; i <= 11; i++) {
-            node = nodeAt(i, 11);
-            while (node.has('bottomLeft')) {
-                if (node.bottomLeft.hasStone() && !node.hasStone())
-                    node.score += 1;
-                node = node.bottomLeft;
-            }
-            node = nodeAt(11, i);
-            while (node.has('topRight')) {
-                if (node.topRight.hasStone() && !node.hasStone())
-                    node.score += 1;
-                node = node.topRight;
-            }
-            node = nodeAt(1, i);
-            while (node.has('bottomRight')) {
-                if (node.bottomRight.hasStone() && !node.hasStone())
-                    node.score += 1;
-                node = node.bottomRight;
-            }
-        }
-        for (let i = 10; i >= 1; i--) {
-            node = nodeAt(i, 11);
-            while (node.has('topLeft')) {
-                if (node.topLeft.hasStone() && !node.hasStone())
-                    node.score += 1;
-                node = node.topLeft;
-            }
+const maxScoredNode = () => {
+    const HEAP = new MaxHeap();
+    for (let i = 1; i <= 11; i++) {
+        let node = nodeAt(i, 1);
+        while (node.has('right')) {
+            HEAP.add(node);
+            node = node.right;
         }
     }
-    catch (e) {
-        console.log(e);
-    }
+    const chadNode = HEAP.peek();
+    HEAP.dispose();
+    return chadNode;
 };
-const checkForTwoInRow = () => {
+const checkForAdjacent = () => {
+    console.time();
     try {
-        let node;
+        var node, weight = 1;
         for (let i = 1; i <= 11; i++) {
             node = nodeAt(i, 1);
             while (node.has('right')) {
-                if (node.hasStone() && node.right.hasStone()
-                    && node.colorIs(playerStoneColor) && node.right.colorIs(playerStoneColor)) {
-                    if (node.left !== null && node.left.isEmpty())
-                        node.left.score += 2;
+                if (node.hasStone()) {
+                    POINTER_MAP.forEach(pointer => {
+                        if (node[pointer].isEmpty())
+                            node[pointer].score += weight;
+                    });
                 }
                 node = node.right;
             }
@@ -104,4 +32,38 @@ const checkForTwoInRow = () => {
     catch (e) {
         console.log(e);
     }
+    console.timeEnd();
+};
+const checkForTwoInRow = () => {
+    console.time();
+    try {
+        var node;
+        var getPatternAndScore = (color) => {
+            var weight = color === playerStoneColor ? 2 : 3;
+            PATTERN_MAP.forEach(pointer => {
+                if (node[pointer].colorIs(color)) {
+                    if (node.opDirOf(pointer) !== null && node.opDirOf(pointer).isEmpty())
+                        node.opDirOf(pointer).score += weight;
+                    if (node.numOfPAway(2, pointer).score !== null && node.numOfPAway(2, pointer).isEmpty())
+                        node.numOfPAway(2, pointer).score += weight;
+                }
+            });
+        };
+        for (let i = 1; i <= 11; i++) {
+            node = nodeAt(i, 1);
+            while (node.has('right')) {
+                if (node.colorIs(playerStoneColor)) {
+                    getPatternAndScore(playerStoneColor);
+                }
+                if (node.colorIs(AIStoneColor)) {
+                    getPatternAndScore(AIStoneColor);
+                }
+                node = node.right;
+            }
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
+    console.timeEnd();
 };

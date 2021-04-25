@@ -1,24 +1,18 @@
-var stoneCanvas = <HTMLCanvasElement> document.getElementById('placeStoneLayer')
-var context = <CanvasRenderingContext2D> stoneCanvas.getContext('2d')
+const stoneCanvas = <HTMLCanvasElement> document.getElementById('placeStoneLayer')
+const context = <CanvasRenderingContext2D> stoneCanvas.getContext('2d')
 
-const playOneRound = (onClick: MouseEvent): void => {
-    const RECT: DOMRect = stoneCanvas.getBoundingClientRect()
-    x = onClick.clientX - RECT.left
-    y = onClick.clientY - RECT.top 
-
-    if( x < 0 || x > 550 || y < 0 || y > 550 ) 
-        return
-    
+const playRound = (x: number, y: number): void => {
     try{   
-        getRoundedXY()
+        x = getRounded(x)
+        y = getRounded(y)
 
-        const ROW_NUM: number = (y+25)/50, 
-              COL_NUM: number = (x+25)/50,
+        const ROW_NUM = (y+25)/50, 
+              COL_NUM = (x+25)/50,
               CLICKED_NODE: GraphNode = nodeAt(ROW_NUM, COL_NUM)
     
         if (CLICKED_NODE.isEmpty()) {
-            CLICKED_NODE.stone  = true
-            CLICKED_NODE.color  = playerStoneColor
+            CLICKED_NODE.stone = true
+            CLICKED_NODE.color = playerStoneColor
             youPlaceStone(x, y)
             AIPlaceStone()
         }
@@ -29,15 +23,11 @@ const playOneRound = (onClick: MouseEvent): void => {
 }
 
 //Helper Functions
-const getRoundedXY = (): void => {
-    const FIRST_DIGITS_X: number = Math.floor(x/100), 
-      LAST_TWO_ROUNDED_X: number = parseInt(`${~~(x/10)%10}${x%10}`) <= 50? 25: 75,
+const getRounded = (raw: number): number => {
+    const FIRST_DIGITS = Math.floor(raw/100), 
+      LAST_TWO_ROUNDED = parseInt(`${~~(raw/10)%10}${raw%10}`) <= 50? 25: 75
 
-          FIRST_DIGITS_Y: number = Math.floor(y/100), 
-      LAST_TWO_ROUNDED_Y: number = parseInt(`${~~(y/10)%10}${y%10}`) <= 50? 25: 75
-
-    x = parseInt("" + FIRST_DIGITS_X + LAST_TWO_ROUNDED_X)
-    y = parseInt("" + FIRST_DIGITS_Y + LAST_TWO_ROUNDED_Y)
+    return parseInt("" + FIRST_DIGITS + LAST_TWO_ROUNDED)
 } 
 
 const youPlaceStone = (X: number, Y: number): void => {

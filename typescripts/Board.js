@@ -1,15 +1,12 @@
 "use strict";
-var canvas = document.getElementById('boardUILayer');
-var ctx = canvas.getContext('2d');
-/*------------Make Board Grid with LinkedGrid------------*/
+const canvas = document.getElementById('boardUILayer');
+const ctx = canvas.getContext('2d');
 const makeBoard = (margin) => {
-    //Make x*y amount of nodes and name them nodeAt + coordinate
     for (let x = 1; x <= margin; x++) {
         for (let y = 1; y <= margin; y++) {
             window['nodeAt' + x + 'x' + y] = new GraphNode(x, y);
         }
     }
-    //Then doubly link all the nodes to each other by using their name properties
     for (let x = 1; x <= margin; x++) {
         for (let y = 1; y <= margin; y++) {
             nodeAt(x, y).left = nodeAt(x, y - 1), nodeAt(x, y).right = nodeAt(x, y + 1);
@@ -18,14 +15,12 @@ const makeBoard = (margin) => {
             nodeAt(x, y).topLeft = nodeAt(x - 1, y - 1), nodeAt(x, y).topRight = nodeAt(x - 1, y + 1);
         }
     }
-    //draw the lines on canvas
     let coordinate = 0;
     do {
         drawLine('horizontal', coordinate);
         drawLine('vertical', coordinate);
     } while ((coordinate += 550 / margin) <= 550);
 };
-/*------------Make Board Grid with LinkedGrid------------*/
 let line = 0, speed = 0.25;
 const drawLine = (hOrV, margin) => {
     const drawTheLine = () => {

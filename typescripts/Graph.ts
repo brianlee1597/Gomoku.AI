@@ -48,6 +48,24 @@ class GraphNode {
     to  = (POINTER: string): GraphNode | void => this[POINTER]
 
     colorIs   = (i: string): boolean => i === this.color? true: false
+
+    opDirOf = (pointer: string): GraphNode | void => {
+        return pointer === 'left'? this.right
+              :pointer === 'right'? this.left
+              :pointer === 'up'? this.down
+              :pointer === 'down'? this.up
+              :pointer === 'topLeft'? this.bottomRight
+              :pointer === 'topRight'? this.bottomLeft
+              :pointer === 'bottomLeft'? this.topRight
+              :this.topLeft
+    }
+
+    numOfPAway = (i: number, pointer: string): GraphNode | void => {
+        return i === 2? this[pointer][pointer]
+              :i === 3? this[pointer][pointer][pointer]
+              :i === 4? this[pointer][pointer][pointer][pointer]
+              :this[pointer][pointer][pointer][pointer][pointer]
+    }
 }
 
 const nodeAt = (x: number,y: number): GraphNode => window['nodeAt' + x + 'x' + y]

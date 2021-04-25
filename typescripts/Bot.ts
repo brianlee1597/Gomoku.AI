@@ -1,17 +1,21 @@
-var AICanvas = <HTMLCanvasElement> document.getElementById('botScanLayer')
-var AIContext = <CanvasRenderingContext2D> AICanvas.getContext('2d')
+const AICanvas = <HTMLCanvasElement> document.getElementById('botScanLayer')
+const AIContext = <CanvasRenderingContext2D> AICanvas.getContext('2d')
+const highlightCanvas = <HTMLCanvasElement> document.getElementById('scoredNodeHighlightLayer')
+const highlightCtx = <CanvasRenderingContext2D> highlightCanvas.getContext('2d')
 
 const AIPlaceStone = (): void => {
+    checkForAdjacent()
+    checkForTwoInRow()
     if (visualAI) {
-        checkForAdjacent()
-        checkForTwoInRow()
         highlightBoard()
         highlightCtx.clearRect(0, 0, 550, 550)
         setTimeout(clearAllScore, 1000)
     }
+    // const node = maxScoredNode()
+    // console.log(node.score)
 }
 
-const highlightBoard = (): void => { //move to ai
+const highlightBoard = (): void => {
     let i: number = 1, random = ~~(Math.random() * 4 + 1)
     const POINTER: string = POINTER_MAP.get(random)
 
@@ -79,6 +83,14 @@ const clearCanvas = (POINTER: string): void => {
     }; clearCol(i) // clears 1 column at a time each loop
 }
 
+const colorBy = (score: number): string => {
+    return score < 1? 'transparent': score < 2? 'red'   :
+           score < 3? 'orange':      score < 4? 'yellow':
+           score < 5? 'green' :      score < 6? 'blue'  :
+           score < 7? 'violet':      score < 8? 'grey'  :
+           'black'
+}
+
 const toggleVis = (): void => {
     visualAI = visualAI === false ? true : false
 
@@ -88,10 +100,3 @@ const toggleVis = (): void => {
     else
         visual_text.add('hidden')
 }
-
-const POINTER_MAP: Map<number, string> = new Map([
-    [1, 'up'],
-    [2, 'down'],
-    [3, 'left'],
-    [4, 'right']
-])

@@ -1,10 +1,12 @@
 "use strict";
-var AICanvas = document.getElementById('botScanLayer');
-var AIContext = AICanvas.getContext('2d');
+const AICanvas = document.getElementById('botScanLayer');
+const AIContext = AICanvas.getContext('2d');
+const highlightCanvas = document.getElementById('scoredNodeHighlightLayer');
+const highlightCtx = highlightCanvas.getContext('2d');
 const AIPlaceStone = () => {
+    checkForAdjacent();
+    checkForTwoInRow();
     if (visualAI) {
-        checkForAdjacent();
-        checkForTwoInRow();
         highlightBoard();
         highlightCtx.clearRect(0, 0, 550, 550);
         setTimeout(clearAllScore, 1000);
@@ -78,7 +80,14 @@ const clearCanvas = (POINTER) => {
             }
         }, 50);
     };
-    clearCol(i); // clears 1 column at a time each loop
+    clearCol(i);
+};
+const colorBy = (score) => {
+    return score < 1 ? 'transparent' : score < 2 ? 'red' :
+        score < 3 ? 'orange' : score < 4 ? 'yellow' :
+            score < 5 ? 'green' : score < 6 ? 'blue' :
+                score < 7 ? 'violet' : score < 8 ? 'grey' :
+                    'black';
 };
 const toggleVis = () => {
     visualAI = visualAI === false ? true : false;
@@ -88,9 +97,3 @@ const toggleVis = () => {
     else
         visual_text.add('hidden');
 };
-const POINTER_MAP = new Map([
-    [1, 'up'],
-    [2, 'down'],
-    [3, 'left'],
-    [4, 'right']
-]);

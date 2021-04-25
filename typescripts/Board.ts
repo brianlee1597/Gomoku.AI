@@ -1,7 +1,6 @@
-var canvas = <HTMLCanvasElement> document.getElementById('boardUILayer')
-var ctx = <CanvasRenderingContext2D> canvas.getContext('2d')
+const canvas = <HTMLCanvasElement> document.getElementById('boardUILayer')
+const ctx = <CanvasRenderingContext2D> canvas.getContext('2d')
 
-/*------------Make Board Grid with LinkedGrid------------*/
 const makeBoard = (margin: number): void => {
     //Make x*y amount of nodes and name them nodeAt + coordinate
     for (let x = 1; x <= margin; x++) {
@@ -21,11 +20,10 @@ const makeBoard = (margin: number): void => {
     //draw the lines on canvas
     let coordinate = 0
     do {
-        drawLine( 'horizontal', coordinate )
-        drawLine( 'vertical',   coordinate )
-    } while ( (coordinate += 550 / margin) <= 550)
+        drawLine('horizontal', coordinate)
+        drawLine('vertical',   coordinate)
+    } while ((coordinate += 550 / margin) <= 550)
 }
-/*------------Make Board Grid with LinkedGrid------------*/
 
 let line: number = 0, speed: number = 0.25
 
