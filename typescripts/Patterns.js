@@ -1,6 +1,6 @@
 "use strict";
 const maxScoredNode = () => {
-    const HEAP = new MaxHeap();
+    const HEAP = new MaxNode();
     for (let i = 1; i <= 11; i++) {
         let node = nodeAt(i, 1);
         while (node.has('right')) {
@@ -21,8 +21,7 @@ const checkForAdjacent = () => {
             while (node.has('right')) {
                 if (node.hasStone()) {
                     POINTER_MAP.forEach(pointer => {
-                        if (node[pointer].isEmpty())
-                            node[pointer].score += weight;
+                        node[pointer].score += weight;
                     });
                 }
                 node = node.right;
@@ -44,9 +43,15 @@ const checkForTwoInRow = () => {
                 if (node[pointer].colorIs(color)) {
                     if (node.numOfPAway(2, pointer).color !== oppositeOf(color)) {
                         if (node.opDirOf(pointer) !== null && node.opDirOf(pointer).isEmpty())
-                            node.opDirOf(pointer).score += weight;
+                            if (node[pointer].colorIs(playerStoneColor))
+                                node.opDirOf(pointer).score += weight - 1;
+                            else
+                                node.opDirOf(pointer).score += weight;
                         if (node.numOfPAway(2, pointer).score !== null && node.numOfPAway(2, pointer).isEmpty())
-                            node.numOfPAway(2, pointer).score += weight;
+                            if (node[pointer].colorIs(playerStoneColor))
+                                node.opDirOf(pointer).score += weight - 1;
+                            else
+                                node.opDirOf(pointer).score += weight;
                     }
                     else {
                         if (node.opDirOf(pointer) !== null && node.opDirOf(pointer).isEmpty())

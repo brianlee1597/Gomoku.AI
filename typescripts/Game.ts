@@ -2,23 +2,17 @@ const stoneCanvas = <HTMLCanvasElement> document.getElementById('placeStoneLayer
 const context = <CanvasRenderingContext2D> stoneCanvas.getContext('2d')
 
 const playRound = (x: number, y: number): void => {
-    try{   
-        x = getRounded(x)
-        y = getRounded(y)
+    x = getRounded(x), y = getRounded(y)
 
-        const ROW_NUM = (y+25)/50, 
-              COL_NUM = (x+25)/50,
-              CLICKED_NODE: GraphNode = nodeAt(ROW_NUM, COL_NUM)
+    const ROW_NUM = (y+25)/50, 
+          COL_NUM = (x+25)/50,
+          CLICKED_NODE = nodeAt(ROW_NUM, COL_NUM)
     
-        if (CLICKED_NODE.isEmpty()) {
-            CLICKED_NODE.stone = true
-            CLICKED_NODE.color = playerStoneColor
-            youPlaceStone(x, y)
-            AIPlaceStone()
-        }
-        x= null, y = null
-    } catch (e) {
-        console.log(e)
+    if (CLICKED_NODE.isEmpty()) {
+        CLICKED_NODE.stone = true
+        CLICKED_NODE.color = playerStoneColor
+        youPlaceStone(x, y)
+        AIPlaceStone()
     }
 }
 
@@ -34,7 +28,6 @@ const youPlaceStone = (X: number, Y: number): void => {
     context.beginPath()
     context.arc(X, Y, 20, 0, 2 * Math.PI, false)
     context.fillStyle = playerStoneColor
-    playerStoneColor  = playerStoneColor === '#2D2D2A'? '#E5DCC5': '#2D2D2A'
     context.fill()
     context.stroke()
 }

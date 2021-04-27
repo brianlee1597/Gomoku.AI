@@ -11,8 +11,17 @@ const AIPlaceStone = (): void => {
         highlightCtx.clearRect(0, 0, 550, 550)
         setTimeout(clearAllScore, 1000)
     }
-    // const node = maxScoredNode()
-    // console.log(node.score)
+    const node = maxScoredNode()
+    AIDrawStone(node)
+}
+
+const AIDrawStone = (node: GraphNode): void => {
+    node.stone = true
+    context.beginPath()
+    context.arc(node.coord_x, node.coord_y, 20, 0, 2 * Math.PI, false)
+    context.fillStyle = AIStoneColor
+    context.fill()
+    context.stroke()
 }
 
 const highlightBoard = (): void => {
@@ -27,14 +36,12 @@ const highlightBoard = (): void => {
         do { highlight(nodeAt(i++, 11), POINTER) } while (i <= 11)
     else if (POINTER === 'right')
         do { highlight(nodeAt(i++, 1),  POINTER) } while (i <= 11)
-    else
-        throw new Error("Error on Bot.ts / scanBoard: pointer map has invalid value: " + random)
 }
 
 const highlight = (node: GraphNode | any, POINTER: string): void => {
     let scanEachColumn = (): void => { 
         setTimeout(() => {
-            twinkle(node, x, y)
+            twinkle(node)
 
             if (node.has(POINTER)){
                 node = node.to(POINTER)
@@ -46,7 +53,7 @@ const highlight = (node: GraphNode | any, POINTER: string): void => {
     }; scanEachColumn()
 }
 
-const twinkle = (NODE: GraphNode, X: number, Y: number): void => {
+const twinkle = (NODE: GraphNode): void => {
     if (NODE.hasStone())
         return
 
