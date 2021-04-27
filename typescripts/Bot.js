@@ -53,7 +53,7 @@ const twinkle = (NODE, X, Y) => {
         return;
     const fill = (canvas, color) => {
         canvas.beginPath();
-        canvas.arc(NODE.coord_x, NODE.coord_y, 3, 0, 2 * Math.PI, false);
+        canvas.arc(NODE.coord_x, NODE.coord_y, 2.5, 0, 2 * Math.PI, false);
         canvas.fillStyle = color;
         canvas.fill();
     };

@@ -1,11 +1,11 @@
 const playingField = document.getElementById('placeStoneLayer')
 const on = playingField.addEventListener
-const whateverPlayerChose = '#457b9d'
+const whateverPlayerChose = '#2D2D2A'
 
 let x: number, y: number = null
 let visualAI: boolean = false
 let playerStoneColor: string = whateverPlayerChose,
-    AIStoneColor: string = whateverPlayerChose == '#457b9d' ? '#f1faee' : '#457b9d'
+    AIStoneColor: string = whateverPlayerChose == '#2D2D2A' ? '#E5DCC5' : '#2D2D2A'
 
 const POINTER_MAP: Map<number, string> = new Map([
     [1, 'up'], [2, 'down'], [3, 'left'], [4, 'right'],

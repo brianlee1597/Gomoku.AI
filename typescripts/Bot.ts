@@ -52,7 +52,7 @@ const twinkle = (NODE: GraphNode, X: number, Y: number): void => {
 
     const fill = (canvas: CanvasRenderingContext2D, color: string) => {
         canvas.beginPath()
-        canvas.arc(NODE.coord_x, NODE.coord_y, 3, 0, 2 * Math.PI, false)
+        canvas.arc(NODE.coord_x, NODE.coord_y, 2.5, 0, 2 * Math.PI, false)
         canvas.fillStyle = color
         canvas.fill()
     }

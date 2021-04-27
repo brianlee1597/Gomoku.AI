@@ -34,7 +34,7 @@ const youPlaceStone = (X: number, Y: number): void => {
     context.beginPath()
     context.arc(X, Y, 20, 0, 2 * Math.PI, false)
     context.fillStyle = playerStoneColor
-    playerStoneColor  = playerStoneColor === '#457b9d'? '#f1faee': '#457b9d'
+    playerStoneColor  = playerStoneColor === '#2D2D2A'? '#E5DCC5': '#2D2D2A'
     context.fill()
     context.stroke()
 }

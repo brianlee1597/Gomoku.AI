@@ -39,9 +39,11 @@ class GraphNode {
 }
 const nodeAt = (x, y) => window['nodeAt' + x + 'x' + y];
 const clearAllScore = () => {
+    console.time();
     for (let x = 1; x <= 11; x++) {
         for (let y = 1; y <= 11; y++) {
             nodeAt(x, y).score = 0;
         }
     }
+    console.timeEnd();
 };

@@ -42,10 +42,16 @@ const checkForTwoInRow = () => {
             var weight = color === playerStoneColor ? 2 : 3;
             PATTERN_MAP.forEach(pointer => {
                 if (node[pointer].colorIs(color)) {
-                    if (node.opDirOf(pointer) !== null && node.opDirOf(pointer).isEmpty())
-                        node.opDirOf(pointer).score += weight;
-                    if (node.numOfPAway(2, pointer).score !== null && node.numOfPAway(2, pointer).isEmpty())
-                        node.numOfPAway(2, pointer).score += weight;
+                    if (node.numOfPAway(2, pointer).color !== oppositeOf(color)) {
+                        if (node.opDirOf(pointer) !== null && node.opDirOf(pointer).isEmpty())
+                            node.opDirOf(pointer).score += weight;
+                        if (node.numOfPAway(2, pointer).score !== null && node.numOfPAway(2, pointer).isEmpty())
+                            node.numOfPAway(2, pointer).score += weight;
+                    }
+                    else {
+                        if (node.opDirOf(pointer) !== null && node.opDirOf(pointer).isEmpty())
+                            node.opDirOf(pointer).score += (weight - 2);
+                    }
                 }
             });
         };
@@ -67,3 +73,4 @@ const checkForTwoInRow = () => {
     }
     console.timeEnd();
 };
+const oppositeOf = (color) => color === playerStoneColor ? AIStoneColor : playerStoneColor;

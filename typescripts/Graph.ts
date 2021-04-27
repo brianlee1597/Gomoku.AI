@@ -71,9 +71,11 @@ class GraphNode {
 const nodeAt = (x: number,y: number): GraphNode => window['nodeAt' + x + 'x' + y]
 
 const clearAllScore = (): void => {
+    console.time()
     for(let x: number = 1; x <= 11; x++){
         for(let y: number = 1; y <= 11; y++){
             nodeAt(x ,y).score = 0
         }
     }
+    console.timeEnd()
 }

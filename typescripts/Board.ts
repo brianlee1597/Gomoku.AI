@@ -31,7 +31,7 @@ const drawLine = (hOrV: string, margin: number) => {
     const drawTheLine = (): void => {
         ctx.beginPath()
         line = line < 550 ? line + speed : line
-        ctx.lineWidth = 0.5, ctx.strokeStyle = '#e5e5e5'
+        ctx.lineWidth = 1, ctx.strokeStyle = '#e1e1e1'
         if (hOrV === 'horizontal') {
             ctx.moveTo(0, margin + 25)
             ctx.lineTo(line, margin + 25)

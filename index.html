@@ -16,13 +16,20 @@
 </head>
 <body>
 
-    <canvas id="boardUILayer" width="550" height="550"></canvas>
-    <canvas id="placeStoneLayer" width="550" height="550"></canvas>
-    <canvas id="botScanLayer" width="550" height="550"></canvas>
-    <canvas id="scoredNodeHighlightLayer" width="550" height="550"></canvas>
-
-    <button style="position: absolute;" onclick="toggleVis()">VisualizeAI</button>
-    <p style="position: absolute; margin-top: 100px;" class="hidden">visualization is on!</p>
+    <div class="container">
+        <div class="card">
+            <h1>PLAYER</h1>
+        </div>
+        <canvas id="boardUILayer" width="550" height="550"></canvas>
+        <canvas id="placeStoneLayer" width="550" height="550"></canvas>
+        <canvas id="botScanLayer" width="550" height="550"></canvas>
+        <canvas id="scoredNodeHighlightLayer" width="550" height="550"></canvas>
+        <div class="card">
+            <h1>BOT</h1>
+            <button onclick="toggleVis()">VisualizeAI</button>
+            <p class="hidden">visualization is on!</p>
+        </div>
+    </div>
 
 </body>
 </html>
