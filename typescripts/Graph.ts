@@ -4,7 +4,7 @@ class GraphNode {
     y: number
     coord_x: number
     coord_y: number
-    name: string
+    name : string
     stone: boolean
     score: number
     color: string
@@ -47,13 +47,13 @@ class GraphNode {
 
     to  = (POINTER: string): GraphNode | void => this[POINTER]
 
-    colorIs   = (i: string): boolean => i === this.color? true: false
+    colorIs   = (i: string): boolean => i === this.color ? true : false
 
     opDirOf = (pointer: string): GraphNode | void => {
-        return pointer === 'left'? this.right
-              :pointer === 'right'? this.left
-              :pointer === 'up'? this.down
+        return pointer === 'up'? this.down
               :pointer === 'down'? this.up
+              :pointer === 'left'? this.right
+              :pointer === 'right'? this.left
               :pointer === 'topLeft'? this.bottomRight
               :pointer === 'topRight'? this.bottomLeft
               :pointer === 'bottomLeft'? this.topRight
@@ -61,19 +61,17 @@ class GraphNode {
     }
 
     numOfPAway = (i: number, pointer: string): GraphNode | void => {
-        return i === 2? this[pointer][pointer]
+        return i === 1? this[pointer]
+              :i === 2? this[pointer][pointer]
               :i === 3? this[pointer][pointer][pointer]
-              :i === 4? this[pointer][pointer][pointer][pointer]
-              :this[pointer][pointer][pointer][pointer][pointer]
+              :this[pointer][pointer][pointer][pointer]
     }
 }
 
 const nodeAt = (x: number,y: number): GraphNode => window['nodeAt' + x + 'x' + y]
 
 const clearAllScore = (): void => {
-    console.time()
     for(let x: number = 1; x <= 11; x++) 
     for(let y: number = 1; y <= 11; y++)
         nodeAt(x ,y).score = 0
-    console.timeEnd()
 }

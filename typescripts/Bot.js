@@ -1,26 +1,40 @@
 "use strict";
-const AICanvas = document.getElementById('botScanLayer');
-const AIContext = AICanvas.getContext('2d');
-const highlightCanvas = document.getElementById('scoredNodeHighlightLayer');
-const highlightCtx = highlightCanvas.getContext('2d');
+const AICV = document.getElementById('botScanLayer'), AICX = AICV.getContext('2d'), HLCV = document.getElementById('scoredNodeHighlightLayer'), HCTX = HLCV.getContext('2d');
 const AIPlaceStone = () => {
-    checkForAdjacent();
-    checkForTwoInRow();
+    checkAllPatterns();
+    var MAX_NODE = maxScoredNode();
     if (visualAI) {
         highlightBoard();
-        highlightCtx.clearRect(0, 0, 550, 550);
-        setTimeout(clearAllScore, 1000);
+        setTimeout(() => {
+            clearAllScore();
+            HCTX.clearRect(0, 0, 550, 550);
+            AIDrawStone(MAX_NODE);
+        }, 1500);
     }
-    const node = maxScoredNode();
-    AIDrawStone(node);
+    else {
+        clearAllScore();
+        AIDrawStone(MAX_NODE);
+    }
 };
-const AIDrawStone = (node) => {
-    node.stone = true;
-    context.beginPath();
-    context.arc(node.coord_x, node.coord_y, 20, 0, 2 * Math.PI, false);
-    context.fillStyle = AIStoneColor;
-    context.fill();
-    context.stroke();
+const AIDrawStone = (NODE) => {
+    NODE.stone = true;
+    NODE.color,
+        CTXT.fillStyle = AIStoneColor;
+    CTXT.beginPath();
+    CTXT.arc(NODE.coord_x, NODE.coord_y, 20, 0, 2 * Math.PI, false);
+    CTXT.fill();
+    CTXT.stroke();
+};
+const maxScoredNode = () => {
+    var ARRAY = new MaxNode();
+    for (let i = 1; i <= 11; i++) {
+        let node = nodeAt(i, 1);
+        while (node.has('right')) {
+            ARRAY.add(node);
+            node = node.right;
+        }
+    }
+    return ARRAY.pop();
 };
 const highlightBoard = () => {
     let i = 1, random = ~~(Math.random() * 4 + 1);
@@ -66,9 +80,9 @@ const twinkle = (NODE) => {
         canvas.fill();
     };
     if (NODE.hasScore())
-        fill(highlightCtx, colorBy(NODE.score));
+        fill(HCTX, colorBy(NODE.score));
     else
-        fill(AIContext, 'grey');
+        fill(AICX, 'grey');
 };
 const clearCanvas = (POINTER) => {
     let i = POINTER === 'right' || POINTER === 'down' ? 0 : 550;
@@ -77,31 +91,30 @@ const clearCanvas = (POINTER) => {
             return;
         setTimeout(() => {
             if (POINTER === 'right' || POINTER === 'down') {
-                POINTER === 'right' ? AIContext.clearRect(0, 0, i, 550)
-                    : AIContext.clearRect(0, 0, 550, i);
+                POINTER === 'right' ? AICX.clearRect(0, 0, i, 550)
+                    : AICX.clearRect(0, 0, 550, i);
                 clearCol(i + 50);
             }
             else {
-                POINTER === 'up' ? AIContext.clearRect(0, i, 550, 50)
-                    : AIContext.clearRect(i, 0, 50, 550);
+                POINTER === 'left' ? AICX.clearRect(i, 0, 50, 550)
+                    : AICX.clearRect(0, i, 550, 50);
                 clearCol(i - 50);
             }
         }, 50);
     };
     clearCol(i);
 };
-const colorBy = (score) => {
-    return score < 1 ? 'transparent' : score < 2 ? 'red' :
-        score < 3 ? 'orange' : score < 4 ? 'yellow' :
-            score < 5 ? 'green' : score < 6 ? 'blue' :
-                score < 7 ? 'violet' : score < 8 ? 'grey' :
+const colorBy = (SCORE) => {
+    return SCORE < 1 ? 'transparent' : SCORE < 2 ? 'red' :
+        SCORE < 3 ? 'orange' : SCORE < 4 ? 'yellow' :
+            SCORE < 5 ? 'green' : SCORE < 6 ? 'blue' :
+                SCORE < 7 ? 'violet' : SCORE < 8 ? 'grey' :
                     'black';
 };
 const toggleVis = () => {
     visualAI = visualAI === false ? true : false;
-    let visual_text = document.querySelector('p').classList;
-    if (visual_text.contains('hidden'))
-        visual_text.remove('hidden');
-    else
-        visual_text.add('hidden');
+    var VISUAL_TEXT = document.querySelector('p').classList;
+    VISUAL_TEXT.contains('hidden') ?
+        VISUAL_TEXT.remove('hidden') :
+        VISUAL_TEXT.add('hidden');
 };

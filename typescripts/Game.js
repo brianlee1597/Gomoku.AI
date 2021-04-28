@@ -1,24 +1,47 @@
 "use strict";
-const stoneCanvas = document.getElementById('placeStoneLayer');
-const context = stoneCanvas.getContext('2d');
-const playRound = (x, y) => {
-    x = getRounded(x), y = getRounded(y);
-    const ROW_NUM = (y + 25) / 50, COL_NUM = (x + 25) / 50, CLICKED_NODE = nodeAt(ROW_NUM, COL_NUM);
+const STCV = document.getElementById('placeStoneLayer');
+const CTXT = STCV.getContext('2d');
+const playRound = (X, Y) => {
+    X = getRounded(X), Y = getRounded(Y);
+    const ROW_NUM = (Y + 25) / 50, COL_NUM = (X + 25) / 50, CLICKED_NODE = nodeAt(ROW_NUM, COL_NUM);
     if (CLICKED_NODE.isEmpty()) {
         CLICKED_NODE.stone = true;
         CLICKED_NODE.color = playerStoneColor;
-        youPlaceStone(x, y);
+        youPlaceStone(X, Y);
         AIPlaceStone();
     }
+    if (rowOfFive())
+        alert("Game Ended!");
 };
-const getRounded = (raw) => {
-    const FIRST_DIGITS = Math.floor(raw / 100), LAST_TWO_ROUNDED = parseInt(`${~~(raw / 10) % 10}${raw % 10}`) <= 50 ? 25 : 75;
+const getRounded = (RAW) => {
+    const FIRST_DIGITS = Math.floor(RAW / 100), LAST_TWO_ROUNDED = parseInt(`${~~(RAW / 10) % 10}${RAW % 10}`) <= 50 ? 25 : 75;
     return parseInt("" + FIRST_DIGITS + LAST_TWO_ROUNDED);
 };
 const youPlaceStone = (X, Y) => {
-    context.beginPath();
-    context.arc(X, Y, 20, 0, 2 * Math.PI, false);
-    context.fillStyle = playerStoneColor;
-    context.fill();
-    context.stroke();
+    CTXT.beginPath();
+    CTXT.arc(X, Y, 20, 0, 2 * Math.PI, false);
+    CTXT.fillStyle = playerStoneColor;
+    CTXT.fill();
+    CTXT.stroke();
+};
+const rowOfFive = () => {
+    var node;
+    for (let i = 1; i <= 11; i++) {
+        node = nodeAt(i, 1);
+        while (node.has('right')) {
+            if (node.hasStone()) {
+                POINTER_MAP.forEach(pointer => {
+                    if (node.numOfPAway(1, pointer).hasStone()
+                        && node.numOfPAway(2, pointer).hasStone()
+                        && node.numOfPAway(3, pointer).hasStone()
+                        && node.numOfPAway(4, pointer).hasStone()) {
+                        console.log('test');
+                        return true;
+                    }
+                });
+            }
+            node = node.right;
+        }
+    }
+    return false;
 };

@@ -9,20 +9,20 @@ class GraphNode {
         this.to = (POINTER) => this[POINTER];
         this.colorIs = (i) => i === this.color ? true : false;
         this.opDirOf = (pointer) => {
-            return pointer === 'left' ? this.right
-                : pointer === 'right' ? this.left
-                    : pointer === 'up' ? this.down
-                        : pointer === 'down' ? this.up
+            return pointer === 'up' ? this.down
+                : pointer === 'down' ? this.up
+                    : pointer === 'left' ? this.right
+                        : pointer === 'right' ? this.left
                             : pointer === 'topLeft' ? this.bottomRight
                                 : pointer === 'topRight' ? this.bottomLeft
                                     : pointer === 'bottomLeft' ? this.topRight
                                         : this.topLeft;
         };
         this.numOfPAway = (i, pointer) => {
-            return i === 2 ? this[pointer][pointer]
-                : i === 3 ? this[pointer][pointer][pointer]
-                    : i === 4 ? this[pointer][pointer][pointer][pointer]
-                        : this[pointer][pointer][pointer][pointer][pointer];
+            return i === 1 ? this[pointer]
+                : i === 2 ? this[pointer][pointer]
+                    : i === 3 ? this[pointer][pointer][pointer]
+                        : this[pointer][pointer][pointer][pointer];
         };
         this.x = x;
         this.y = y;
@@ -39,9 +39,7 @@ class GraphNode {
 }
 const nodeAt = (x, y) => window['nodeAt' + x + 'x' + y];
 const clearAllScore = () => {
-    console.time();
     for (let x = 1; x <= 11; x++)
         for (let y = 1; y <= 11; y++)
             nodeAt(x, y).score = 0;
-    console.timeEnd();
 };

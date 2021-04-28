@@ -1,5 +1,7 @@
 "use strict";
-const playingField = document.getElementById('placeStoneLayer'), on = playingField.addEventListener, whateverPlayerChose = '#2D2D2A';
+const playingField = document.getElementById('placeStoneLayer');
+const on = playingField.addEventListener;
+const whateverPlayerChose = '#2D2D2A';
 let visualAI = false, playerStoneColor = whateverPlayerChose, AIStoneColor = whateverPlayerChose == '#2D2D2A' ? '#E5DCC5' : '#2D2D2A';
 const POINTER_MAP = new Map([
     [1, 'up'], [2, 'down'], [3, 'left'], [4, 'right'],

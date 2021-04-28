@@ -1,24 +1,21 @@
 class MaxNode{
 
-    oneValuePQ: GraphNode[]
+    maxVal: GraphNode[]
 
-    constructor() {
-        this.oneValuePQ = []
-    }
+    constructor () { this.maxVal = [] }
 
     add = (node: GraphNode) => {
         if(node.isEmpty()){
-            if(this.oneValuePQ.length === 0)
-                this.oneValuePQ.push(node)
-            else if(node.score > this.oneValuePQ[0].score)
-                this.oneValuePQ[0] = node
+            if(this.maxVal.length === 0)
+                this.maxVal.push(node)
+            else if(node.score > this.maxVal[0].score)
+                this.maxVal[0] = node
         }
     }
 
-    peek = () => this.oneValuePQ[0]
-
-    dispose = (): void => {
-        this.oneValuePQ = []
+    pop = (): GraphNode => { 
+        var CHAD = this.maxVal[0]
+        this.maxVal.splice(0) 
+        return CHAD
     }
 }
-
