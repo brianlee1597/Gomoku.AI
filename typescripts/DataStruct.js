@@ -37,9 +37,30 @@ class GraphNode {
         this.bottomLeft = this.down = this.bottomRight = undefined;
     }
 }
-const nodeAt = (x, y) => window['nodeAt' + x + 'x' + y];
-const clearAllScore = () => {
-    for (let x = 1; x <= 11; x++)
-        for (let y = 1; y <= 11; y++)
-            nodeAt(x, y).score = 0;
-};
+class MaxNode {
+    constructor() {
+        this.add = (node) => {
+            if (node.isEmpty()) {
+                if (this.maxVal.length === 0) {
+                    this.maxVal.push(node);
+                }
+                else if (node.score > this.maxVal[0].score) {
+                    this.maxVal[0] = node;
+                }
+            }
+        };
+        this.pop = () => {
+            var CHAD = this.maxVal[0];
+            this.maxVal.splice(0);
+            return CHAD;
+        };
+        this.maxVal = [];
+    }
+}
+const POINTER_MAP = new Map([
+    [1, 'up'], [2, 'down'], [3, 'left'], [4, 'right'],
+    [5, 'topLeft'], [6, 'topRight'], [7, 'bottomLeft'], [8, 'bottomRight']
+]);
+const PATTERN_MAP = new Map([
+    [1, 'up'], [2, 'right'], [3, 'topLeft'], [4, 'topRight']
+]);

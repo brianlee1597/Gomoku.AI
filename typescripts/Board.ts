@@ -21,31 +21,32 @@ const makeBoard = (margin: number): void => {
     do {
         drawLine('horizontal', coord)
         drawLine('vertical',   coord)
-    } while ((coord += 550 / margin) <= 550)
+    } while ((coord += 550 / margin) < 550)
 }
 
-let line: number = 0, speed = 0.25, zero = 0
+let line: number = 25, speed = 0.25
 
 const drawLine = (H_OR_V: string, MARGIN: number) => {
     const drawTheLine = (): void => {
-        line = line < 550 ? line + speed : line
+        line = line < 525 ? line + speed : line
 
         BCTX.beginPath()
         BCTX.lineWidth = 1
-        BCTX.strokeStyle = '#e1e1e1'
+        BCTX.strokeStyle = '#a1a1a1'
 
         if (H_OR_V === 'horizontal') {
-            BCTX.moveTo(zero, MARGIN + 25)
+            BCTX.moveTo(25, MARGIN + 25)
             BCTX.lineTo(line, MARGIN + 25)
         }
         else {
-            BCTX.moveTo(MARGIN + 25, zero)
+            BCTX.moveTo(MARGIN + 25, 25)
             BCTX.lineTo(MARGIN + 25, line)
         }
-
         BCTX.stroke()
 
         requestAnimationFrame(drawTheLine)
     }
         requestAnimationFrame(drawTheLine)
 }
+
+const nodeAt = (x: number,y: number): GraphNode => window['nodeAt' + x + 'x' + y]

@@ -1,3 +1,5 @@
+type node = GraphNode | void
+
 class GraphNode {
 
     x: number
@@ -8,14 +10,14 @@ class GraphNode {
     stone: boolean
     score: number
     color: string
-    topLeft:     GraphNode | void
-    up:          GraphNode | void
-    topRight:    GraphNode | void
-    left:        GraphNode | void
-    right:       GraphNode | void
-    bottomLeft:  GraphNode | void
-    down:        GraphNode | void
-    bottomRight: GraphNode | void
+    topLeft:     node
+    up:          node
+    topRight:    node
+    left:        node
+    right:       node
+    bottomLeft:  node
+    down:        node
+    bottomRight: node
 
     constructor (x: number, y: number) 
     {
@@ -45,11 +47,11 @@ class GraphNode {
 
     has = (POINTER: string): boolean | void => this[POINTER] !== undefined
 
-    to  = (POINTER: string): GraphNode | void => this[POINTER]
+    to  = (POINTER: string): node=> this[POINTER]
 
     colorIs   = (i: string): boolean => i === this.color ? true : false
 
-    opDirOf = (pointer: string): GraphNode | void => {
+    opDirOf = (pointer: string): node => {
         return pointer === 'up'? this.down
               :pointer === 'down'? this.up
               :pointer === 'left'? this.right
@@ -60,7 +62,7 @@ class GraphNode {
               :this.topLeft
     }
 
-    numOfPAway = (i: number, pointer: string): GraphNode | void => {
+    numOfPAway = (i: number, pointer: string): node => {
         return i === 1? this[pointer]
               :i === 2? this[pointer][pointer]
               :i === 3? this[pointer][pointer][pointer]
@@ -68,10 +70,35 @@ class GraphNode {
     }
 }
 
-const nodeAt = (x: number,y: number): GraphNode => window['nodeAt' + x + 'x' + y]
+class MaxNode {
 
-const clearAllScore = (): void => {
-    for(let x: number = 1; x <= 11; x++) 
-    for(let y: number = 1; y <= 11; y++)
-        nodeAt(x ,y).score = 0
+    maxVal: GraphNode[]
+
+    constructor () { this.maxVal = [] }
+
+    add = (node: GraphNode) => {
+        if(node.isEmpty()){
+            if(this.maxVal.length === 0){
+                this.maxVal.push(node)
+            }
+            else if(node.score > this.maxVal[0].score){
+                this.maxVal[0] = node
+        }
+    }
 }
+
+    pop = (): GraphNode => { 
+        var CHAD = this.maxVal[0]
+        this.maxVal.splice(0) 
+        return CHAD
+    }
+}
+
+const POINTER_MAP: Map<number, string> = new Map([
+    [1, 'up'], [2, 'down'], [3, 'left'], [4, 'right'],
+    [5, 'topLeft'], [6, 'topRight'], [7, 'bottomLeft'], [8, 'bottomRight']
+])
+
+const PATTERN_MAP: Map<number, string> = new Map([
+    [1, 'up'], [2, 'right'], [3, 'topLeft'], [4, 'topRight']
+])

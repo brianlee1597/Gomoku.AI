@@ -3,76 +3,48 @@ const AICV = <HTMLCanvasElement> document.getElementById('botScanLayer'),
       HLCV = <HTMLCanvasElement> document.getElementById('scoredNodeHighlightLayer'),
       HCTX = <CanvasRenderingContext2D> HLCV.getContext('2d')
 
-const AIPlaceStone = (): void => {
-    checkAllPatterns()
-    var MAX_NODE = maxScoredNode()
-
-    if (visualAI) {
-        highlightBoard()
-        setTimeout(() => {
-            clearAllScore()
-            HCTX.clearRect(0, 0, 550, 550)
-            AIDrawStone(MAX_NODE)
-        }, 1500)
-    }
-    else {
-        clearAllScore()
-        AIDrawStone(MAX_NODE)
-    }
-}
-
-const AIDrawStone = (NODE: GraphNode): void => {
-    NODE.stone = true
-    NODE.color,
-    CTXT.fillStyle = AIStoneColor 
-    CTXT.beginPath()
-    CTXT.arc(NODE.coord_x, NODE.coord_y, 20, 0, 2 * Math.PI, false)
-    CTXT.fill()
-    CTXT.stroke()
-}
-
 const maxScoredNode = (): GraphNode => {
     var ARRAY = new MaxNode()
 
     for (let i = 1; i <= 11; i++) {
         let node: any = nodeAt(i, 1)
-        while (node.has('right')) {
+        while (node.has('right')){
+            if(node.score !== 0)
                 ARRAY.add(node)
-                node = node.right
+            node = node.right
         }
     }
-    
     return ARRAY.pop()
 }
 
 const highlightBoard = (): void => {
-    let i: number = 1, random = ~~(Math.random() * 4 + 1)
-    const POINTER: string = POINTER_MAP.get(random)
+    const RANDOM_MARGIN = ~~(Math.random() * 4 + 1),
+    POINTER: string = POINTER_MAP.get(RANDOM_MARGIN)
 
-    if (POINTER === 'up')
-        do { highlight(nodeAt(11, i++), POINTER) } while (i <= 11)
-    else if (POINTER === 'down')
-        do { highlight(nodeAt(1, i++),  POINTER) } while (i <= 11)
-    else if (POINTER === 'left')
-        do { highlight(nodeAt(i++, 11), POINTER) } while (i <= 11)
-    else if (POINTER === 'right')
-        do { highlight(nodeAt(i++, 1),  POINTER) } while (i <= 11)
+    let i = 0
+    while(i++ < 11) highlight(i, POINTER) 
 }
 
-const highlight = (node: GraphNode | any, POINTER: string): void => {
-    let scanEachColumn = (): void => { 
-        setTimeout(() => {
-            twinkle(node)
+const highlight = (i: number, POINTER: string): void => {
+    let node: node = POINTER === 'up'   ? nodeAt(11, i)
+                    :POINTER === 'down' ? nodeAt(1, i)
+                    :POINTER === 'left' ? nodeAt(i, 11)
+                    :POINTER === 'right'? nodeAt(i, 1): null
+ 
+    scanEachColumn(node, POINTER)
+}
 
-            if (node.has(POINTER)){
-                node = node.to(POINTER)
-                scanEachColumn()
-            }
-            else
-                clearCanvas(POINTER)
-
-        }, 50)
-    }; scanEachColumn()
+const scanEachColumn = (node: any, POINTER: string): void => { 
+    setTimeout(() => {
+        twinkle(node)
+        
+        if (node.has(POINTER)){
+            node = node.to(POINTER)
+            scanEachColumn(node, POINTER)
+        }
+        else
+            clearCanvas(POINTER)
+    }, 50)
 }
 
 const twinkle = (NODE: GraphNode): void => {
@@ -89,7 +61,7 @@ const twinkle = (NODE: GraphNode): void => {
     if (NODE.hasScore()) 
         fill(HCTX, colorBy(NODE.score))
     else 
-        fill(AICX, 'grey')
+        fill(AICX, 'white')
 }
 
 const clearCanvas = (POINTER: string): void => {
@@ -121,6 +93,14 @@ const colorBy = (SCORE: number): string => {
            SCORE < 7? 'violet'     : SCORE < 8? 'grey'  :
            'black'
 }
+
+const clearAllScore = (): void => {
+    for(let x: number = 1; x <= 11; x++) 
+    for(let y: number = 1; y <= 11; y++)
+        nodeAt(x ,y).score = 0
+}
+
+let visualAI: boolean = false
 
 const toggleVis = (): void => {
     visualAI = visualAI === false ? true : false
