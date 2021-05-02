@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script defer src="{{ url_for('static', filename='Board.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='Node.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='BotScripts.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='Players.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='Patterns.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='Game.js') }}"></script>
+    <title>Gomoku by Brian Lee</title>
+</head>
+<body>
+
+    <data value="{{color}}" hidden></data>
+
+    <div class="container">
+        <div class="card">
+            <h1>PLAYER</h1>
+        </div>
+        <canvas id="boardUILayer" width="550" height="550"></canvas>
+        <canvas id="placeStoneLayer" width="550" height="550"></canvas>
+        <canvas id="botScanLayer" width="550" height="550"></canvas>
+        <canvas id="scoredNodeHighlightLayer" width="550" height="550"></canvas>
+        <div class="card">
+            <h1>BOT</h1>
+            <button onclick="toggleVis()">VisualizeAI</button>
+            <p class="hidden">visualization is on!</p>
+        </div>
+    </div>
+
+</body>
+</html>
