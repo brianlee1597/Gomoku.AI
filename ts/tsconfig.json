@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2015",                          
+    "module": "commonjs",                        
+    "removeComments": true,                      
+
+    "strict": true,                              
+    "suppressImplicitAnyIndexErrors": true,      
+    "strictNullChecks": false,                  
+    "esModuleInterop": true,                     
+
+    "skipLibCheck": true,                        
+    "forceConsistentCasingInFileNames": true    
+  }
+}
