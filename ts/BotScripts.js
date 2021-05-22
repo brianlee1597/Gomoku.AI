@@ -3,8 +3,8 @@ const AICV = document.getElementById('botScanLayer'), AICX = AICV.getContext('2d
 const highlightBoardWithEmphasisOn = (maxNode) => {
     const RANDOM_MARGIN = ~~(Math.random() * 4 + 1), POINTER = POINTER_MAP.get(RANDOM_MARGIN);
     let i = 0;
-    while (i++ < 11)
-        highlight(i, POINTER, maxNode);
+    while (i < 11)
+        highlight(i++, POINTER, maxNode);
 };
 const highlight = (i, POINTER, maxNode) => {
     let node = POINTER === 'up' ? nodeAt(11, i)
@@ -16,16 +16,18 @@ const highlight = (i, POINTER, maxNode) => {
 const scanEachColumn = (node, POINTER, maxNode) => {
     setTimeout(() => {
         twinkle(node, maxNode);
-        if (node.has(POINTER)) {
+        if (node === undefined)
+            return;
+        if (!node.has(POINTER))
+            clearCanvas(POINTER);
+        else {
             node = node.to(POINTER);
             scanEachColumn(node, POINTER, maxNode);
         }
-        else
-            clearCanvas(POINTER);
     }, 50);
 };
 const twinkle = (NODE, MAX_NODE) => {
-    if (NODE.hasStone())
+    if (NODE === undefined || NODE.hasStone())
         return;
     var fill = (canvas) => {
         canvas.fillStyle = colorBy(NODE.score);
@@ -55,24 +57,28 @@ const clearCanvas = (POINTER) => {
     };
     clearCol(i);
 };
-const colorBy = (SCORE) => {
-    return SCORE < 1 ? 'white' : SCORE < 2 ? 'red' :
-        SCORE < 3 ? 'orange' : SCORE < 4 ? 'yellow' :
-            SCORE < 5 ? 'green' : SCORE < 6 ? 'blue' :
-                SCORE < 7 ? 'violet' : SCORE < 8 ? 'grey' :
-                    'black';
-};
+const colorBy = (SCORE) => SCORE < 8 ? colorValues.get(SCORE) : 'black';
 const clearAllScoreAndHighLights = () => {
-    for (let x = 1; x <= 11; x++)
-        for (let y = 1; y <= 11; y++)
-            nodeAt(x, y).score = 0;
+    for (let i = 1; i <= 11; i++) {
+        var node = nodeAt(i, 1);
+        while (node !== undefined) {
+            node.score === 0;
+            node.checked === false;
+            node = node.right;
+        }
+    }
     HCTX.clearRect(0, 0, 550, 550);
 };
 let visualAI = false;
 const toggleVisual = () => {
-    var text = document.querySelector('p');
+    const TEXT = document.querySelector('p');
     visualAI = visualAI === true ? false : true;
-    text.hasAttribute('hidden') ?
-        text.removeAttribute('hidden') :
-        text.setAttribute('hidden', '');
+    if (TEXT.hasAttribute('hidden'))
+        TEXT.removeAttribute('hidden');
+    else
+        TEXT.setAttribute('hidden', '');
 };
+const colorValues = new Map([
+    [0, "White"], [1, 'red'], [2, 'orange'], [3, 'yellow'],
+    [4, 'green'], [5, 'blue'], [6, 'violet'], [7, 'grey']
+]);

@@ -24,6 +24,7 @@ class GraphNode {
                     : i === 3 ? this[pointer][pointer][pointer]
                         : this[pointer][pointer][pointer][pointer];
         };
+        this.isChecked = () => this.checked;
         this.x = x;
         this.y = y;
         this.coord_x = y * 25 + (25 * (y - 1));
@@ -32,6 +33,7 @@ class GraphNode {
         this.stone = false;
         this.score = 0;
         this.color = "";
+        this.checked = false;
         this.topLeft = this.up = this.topRight = undefined;
         this.left = this.right = undefined;
         this.bottomLeft = this.down = this.bottomRight = undefined;
@@ -41,9 +43,8 @@ class MaxNode {
     constructor() {
         this.add = (node) => {
             if (node.isEmpty()) {
-                if (this.maxVal.length === 0) {
+                if (!this.maxVal.length)
                     this.maxVal.push(node);
-                }
                 else if (node.score > this.maxVal[0].score) {
                     this.maxVal[0] = node;
                 }

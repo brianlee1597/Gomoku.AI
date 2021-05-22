@@ -18,6 +18,7 @@ class GraphNode {
     bottomLeft:  node
     down:        node
     bottomRight: node
+    checked: boolean
 
     constructor (x: number, y: number) 
     {
@@ -29,6 +30,7 @@ class GraphNode {
         this.stone = false
         this.score = 0
         this.color = ""
+        this.checked = false
 
         this.topLeft    =  this.up      =  this.topRight     = undefined
 //                    \        |         /
@@ -68,6 +70,8 @@ class GraphNode {
               :i === 3? this[pointer][pointer][pointer]
               :this[pointer][pointer][pointer][pointer]
     }
+
+    isChecked = (): boolean => this.checked
 }
 
 class MaxNode {
@@ -78,10 +82,9 @@ class MaxNode {
 
     add = (node: GraphNode) => {
         if(node.isEmpty()){
-            if(this.maxVal.length === 0){
+            if (!this.maxVal.length) 
                 this.maxVal.push(node)
-            }
-            else if(node.score > this.maxVal[0].score){
+            else if (node.score > this.maxVal[0].score){
                 this.maxVal[0] = node
         }
     }
@@ -89,7 +92,7 @@ class MaxNode {
 
     pop = (): GraphNode => { 
         var CHAD = this.maxVal[0]
-        this.maxVal.splice(0) 
+        this.maxVal.splice(0)
         return CHAD
     }
 }

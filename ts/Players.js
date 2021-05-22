@@ -3,8 +3,7 @@ const STCV = document.getElementById('placeStoneLayer'), CTXT = STCV.getContext(
 const drawStone = (X, Y) => {
     CTXT.beginPath();
     CTXT.arc(X, Y, 20, 0, 2 * Math.PI, false);
-    CTXT.fill();
-    CTXT.stroke();
+    CTXT.fill(), CTXT.stroke();
 };
 const Player = {
     StoneColor: playerChoice,
@@ -16,12 +15,10 @@ const Player = {
 const AI = {
     StoneColor: AIChoice,
     PlaceStone: () => {
-        checkAllPatterns();
+        runScoringAlgorithm();
         var maxNode = AI.maxScoredNode();
-        if (visualAI) {
+        if (visualAI)
             highlightBoardWithEmphasisOn(maxNode);
-            console.log('test');
-        }
         setTimeout(() => {
             AI.DrawStoneOn(maxNode);
             clearAllScoreAndHighLights();

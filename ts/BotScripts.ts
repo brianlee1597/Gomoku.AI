@@ -8,7 +8,8 @@ const highlightBoardWithEmphasisOn = (maxNode: GraphNode): void => {
     POINTER: string = POINTER_MAP.get(RANDOM_MARGIN)
 
     let i = 0
-    while(i++ < 11) highlight(i, POINTER, maxNode) 
+    while(i < 11)
+        highlight(i++, POINTER, maxNode) 
 }
 
 const highlight = (i: number, POINTER: string, maxNode: GraphNode): void => {
@@ -24,17 +25,21 @@ const scanEachColumn = (node: any, POINTER: string, maxNode: GraphNode): void =>
     setTimeout(() => {
         twinkle(node, maxNode)
         
-        if (node.has(POINTER)){
+        if (node === undefined)
+            return 
+
+        if (!node.has(POINTER))
+            clearCanvas(POINTER)
+        else {
             node = node.to(POINTER)
             scanEachColumn(node, POINTER, maxNode)
         }
-        else
-            clearCanvas(POINTER)
     }, 50)
 }
 
 const twinkle = (NODE: GraphNode, MAX_NODE: GraphNode): void => {
-    if (NODE.hasStone())
+
+    if (NODE === undefined || NODE.hasStone())
         return
 
     var fill = (canvas: CanvasRenderingContext2D) => {
@@ -51,7 +56,8 @@ const clearCanvas = (POINTER: string): void => {
     let i: number = POINTER === 'right' || POINTER === 'down'? 0: 550
     let clearCol  = (i: number): void => {
 
-        if(i > 550 || i < 0) return
+        if(i > 550 || i < 0) 
+            return
 
         setTimeout(() => {
             if (POINTER === 'right' || POINTER === 'down') {
@@ -70,18 +76,17 @@ const clearCanvas = (POINTER: string): void => {
     clearCol(i)
 }
 
-const colorBy = (SCORE: number): string => {
-    return SCORE < 1? 'white'      : SCORE < 2? 'red'   :
-           SCORE < 3? 'orange'     : SCORE < 4? 'yellow':
-           SCORE < 5? 'green'      : SCORE < 6? 'blue'  :
-           SCORE < 7? 'violet'     : SCORE < 8? 'grey'  :
-           'black'
-}
+const colorBy = (SCORE: number): string => SCORE < 8? colorValues.get(SCORE): 'black'
 
 const clearAllScoreAndHighLights = (): void => {
-    for(let x: number = 1; x <= 11; x++) 
-        for(let y: number = 1; y <= 11; y++)
-            nodeAt(x ,y).score = 0
+    for (let i = 1; i <= 11; i++) {
+        var node: any = nodeAt(i, 1)
+        while (node !== undefined) {
+            node.score === 0
+            node.checked === false
+            node = node.right
+        }
+    }
 
     HCTX.clearRect(0, 0, 550, 550)
 }
@@ -89,10 +94,17 @@ const clearAllScoreAndHighLights = (): void => {
 let visualAI: boolean = false
 
 const toggleVisual = (): void => {
-    var text: HTMLParagraphElement = document.querySelector('p')
+    const TEXT: HTMLParagraphElement = document.querySelector('p')
 
     visualAI = visualAI === true ? false : true
-    text.hasAttribute('hidden')?
-    text.removeAttribute('hidden'):
-    text.setAttribute('hidden', '')
+
+    if (TEXT.hasAttribute('hidden'))
+        TEXT.removeAttribute('hidden')
+    else 
+        TEXT.setAttribute('hidden', '')
 }
+
+const colorValues: Map<number, string> = new Map([
+    [0, "White"], [1, 'red'], [2, 'orange'], [3, 'yellow'],
+    [4, 'green'], [5, 'blue'], [6, 'violet'], [7, 'grey']
+])
