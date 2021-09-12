@@ -32,7 +32,7 @@ const drawLine = (H_OR_V: string, MARGIN: number) => {
 
         BCTX.beginPath()
         BCTX.lineWidth = 1
-        BCTX.strokeStyle = '#a1a1a1'
+        BCTX.strokeStyle = '#a7a7a7'
 
         if (H_OR_V === 'horizontal') {
             BCTX.moveTo(25, MARGIN + 25)

@@ -26,7 +26,7 @@ const drawLine = (H_OR_V, MARGIN) => {
         line = line < 525 ? line + speed : line;
         BCTX.beginPath();
         BCTX.lineWidth = 1;
-        BCTX.strokeStyle = '#a1a1a1';
+        BCTX.strokeStyle = '#a7a7a7';
         if (H_OR_V === 'horizontal') {
             BCTX.moveTo(25, MARGIN + 25);
             BCTX.lineTo(line, MARGIN + 25);

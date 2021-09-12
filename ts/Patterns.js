@@ -22,17 +22,39 @@ const checkForAdjacent = () => {
 };
 const checkForTwoInRow = () => {
     var getPatternAndScore = (color) => {
-        var weight = color === Player.StoneColor ? 3 : 4;
+        var weight = color === Player.StoneColor ? 5 : 6;
         PATTERN_MAP.forEach(pointer => {
-            let tempNode = node.to(pointer);
-            if (tempNode !== undefined && !tempNode.isChecked() && tempNode.colorIs(color)) {
-                let tempNode2 = node.opDirOf(pointer);
-                if (tempNode2 !== undefined && !tempNode2.isChecked() && tempNode2.isEmpty()) {
-                    tempNode2.score += weight;
+            if (node.pointer !== undefined
+                && !node.pointer.isChecked()
+                && node.pointer.colorIs(color)) {
+                if (node.opDirOf(pointer) !== undefined
+                    && node.opDirOf(pointer).isEmpty()) {
+                    if (node.opDirOf(pointer).opDirOf(pointer) !== undefined
+                        && node.opDirOf(pointer).opDirOf(pointer).hasStone()
+                        && !node.opDirOf(pointer).opDirOf(pointer).colorIs(color))
+                        node.opDirOf(pointer).score += (weight / 2);
+                    else if (node.opDirOf(pointer).opDirOf(pointer) !== undefined
+                        && node.opDirOf(pointer).opDirOf(pointer).hasStone()
+                        && node.opDirOf(pointer).opDirOf(pointer).colorIs(color))
+                        node.opDirOf(pointer).score += (weight * 2);
+                    else
+                        node.opDirOf(pointer).score += weight;
                 }
-                if (node.numOfPAway(2, pointer) !== undefined && node.numOfPAway(2, pointer).isEmpty())
-                    node.numOfPAway(2, pointer).score += weight;
-                tempNode.checked === true;
+                if (node.numOfPAway(2, pointer) !== undefined
+                    && node.numOfPAway(2, pointer).isEmpty()) {
+                    if (node.numOfPAway(3, pointer) !== undefined
+                        && !node.numOfPAway(3, pointer).isEmpty()
+                        && node.node.numOfPAway(3, pointer).colorIs(color))
+                        node.numOfPAway(2, pointer).score += (weight * 2);
+                    else if (node.numOfPAway(3, pointer) !== undefined
+                        && !node.numOfPAway(3, pointer).isEmpty()
+                        && !node.node.numOfPAway(3, pointer).colorIs(color))
+                        node.numOfPAway(2, pointer).score += (weight / 2);
+                    else
+                        node.numOfPAway(2, pointer).score += weight;
+                }
+                node.checked === true;
+                node.pointer.checked === true;
             }
         });
     };
@@ -41,7 +63,6 @@ const checkForTwoInRow = () => {
         while (node !== undefined) {
             if (node.hasStone() && !node.isChecked()) {
                 getPatternAndScore(node.color);
-                node.checked === true;
             }
             node = node.right;
         }
@@ -50,10 +71,12 @@ const checkForTwoInRow = () => {
 const checkForThreeInRow = () => {
     var node;
     var getPatternAndScore = (color) => {
-        var weight = color === Player.StoneColor ? 5 : 6;
+        var weight = color === Player.StoneColor ? 8 : 10;
         PATTERN_MAP.forEach(pointer => {
-            if (node[pointer] !== undefined && !node[pointer].isChecked() && node[pointer].colorIs(color)) {
-                if (node.numOfPAway(2, pointer) !== undefined && !node.numOfPAway(2, pointer).isChecked()
+            if (node[pointer] !== undefined && !node[pointer].isChecked()
+                && node[pointer].colorIs(color)) {
+                if (node.numOfPAway(2, pointer) !== undefined
+                    && !node.numOfPAway(2, pointer).isChecked()
                     && node.numOfPAway(2, pointer).colorIs(color)) {
                     if (node.opDirOf(pointer) !== undefined && node.opDirOf(pointer).isEmpty())
                         node.opDirOf(pointer).score += weight;
@@ -82,10 +105,13 @@ const checkForFourInRow = () => {
     var getPatternAndScore = (color) => {
         var weight = color === Player.StoneColor ? 100 : 1000;
         PATTERN_MAP.forEach(pointer => {
-            if (node[pointer] !== undefined && !node[pointer].isChecked() && node[pointer].colorIs(color)) {
-                if (node.numOfPAway(2, pointer) !== undefined && !node.numOfPAway(2, pointer).isChecked()
+            if (node[pointer] !== undefined && !node[pointer].isChecked()
+                && node[pointer].colorIs(color)) {
+                if (node.numOfPAway(2, pointer) !== undefined
+                    && !node.numOfPAway(2, pointer).isChecked()
                     && node.numOfPAway(2, pointer).colorIs(color)) {
-                    if (node.numOfPAway(3, pointer) !== undefined && !node.numOfPAway(3, pointer).isChecked()
+                    if (node.numOfPAway(3, pointer) !== undefined
+                        && !node.numOfPAway(3, pointer).isChecked()
                         && node.numOfPAway(3, pointer).colorIs(color)) {
                         if (node.opDirOf(pointer) !== undefined && node.opDirOf(pointer).isEmpty())
                             node.opDirOf(pointer).score += weight;

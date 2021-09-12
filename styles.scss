@@ -1,5 +1,4 @@
 $OtherLayers: "#placeStoneLayer", "#botScanLayer", "#scoredNodeHighlightLayer";
-$CavedPolymorph: inset 11px 11px 22px #cacaca, inset -11px -11px 22px #f6f6f6;
 $AllSides: left, right, top, bottom;
 
 body {
@@ -37,7 +36,7 @@ body {
 
     #boardUILayer {
       border-radius: 13px;
-      box-shadow: $CavedPolymorph;
+      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     }
 
     #{$OtherLayers} {

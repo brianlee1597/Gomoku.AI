@@ -13,9 +13,18 @@
     <script defer src="ts/Game.js"></script>
     <title>Gomoku by Brian Lee</title>
 </head>
+
 <body>
-    
-    <div class="game_container">
+    <div id="intro">
+        <h1>Welcome to Gomoku!</h1>
+        <h3>Game Rule: Make 5 in any direction of the board.</h3>
+        <h1>Choose Your color: </h1>
+        <input type="radio" />
+        <input type="radio" />
+        <button onclick="startGame()">Start!</button>
+    </div>
+
+    <div class="game_container" id="game_container">
         <div class="card">
             <h1>PLAYER</h1>
         </div>
@@ -30,5 +39,13 @@
         </div>
     </div>
 
+    <script>
+        document.getElementById("game_container").style.display = "none";
+
+        function startGame () {
+            document.getElementById("intro").style.display = "none";
+            document.getElementById("game_container").style.display = "flex";
+        }
+    </script>
 </body>
 </html>

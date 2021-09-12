@@ -17,7 +17,7 @@ on('mousedown', function (e: MouseEvent): void {
     console.timeEnd()
 })
 
-const playRound = (X: number, Y: number): void => {
+const playRound = async (X: number, Y: number): Promise<void> => {
     var getRounded = (RAW: number): number => {
         const FIRST_DIGITS = Math.floor(RAW/100), 
           LAST_TWO_ROUNDED = parseInt(`${~~(RAW/10)%10}${RAW%10}`) <= 50? 25: 75
@@ -34,7 +34,7 @@ const playRound = (X: number, Y: number): void => {
     if (CLICKED_NODE.isEmpty()) {
         CLICKED_NODE.stone = true
         CLICKED_NODE.color = Player.StoneColor
-        Player.PlaceStone(X, Y)
+        await Player.PlaceStone(X, Y)
         AI.PlaceStone()
     }
 }

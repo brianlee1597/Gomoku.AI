@@ -3,12 +3,12 @@ const AICV = <HTMLCanvasElement> document.getElementById('botScanLayer'),
       HLCV = <HTMLCanvasElement> document.getElementById('scoredNodeHighlightLayer'),
       HCTX = <CanvasRenderingContext2D> HLCV.getContext('2d')
 
-const highlightBoardWithEmphasisOn = (maxNode: GraphNode): void => {
+const highlightBoardWithEmphasisOn = (maxNode: GraphNode) => {
     const RANDOM_MARGIN = ~~(Math.random() * 4 + 1),
     POINTER: string = POINTER_MAP.get(RANDOM_MARGIN)
 
     let i = 0
-    while(i < 11)
+    while(i <= 11)
         highlight(i++, POINTER, maxNode) 
 }
 

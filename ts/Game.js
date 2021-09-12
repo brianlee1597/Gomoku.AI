@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 const PLAYING_FIELD = document.getElementById('placeStoneLayer');
 const on = PLAYING_FIELD.addEventListener;
 let isLoading = true;
@@ -11,7 +20,7 @@ on('mousedown', function (e) {
     playRound(X, Y);
     console.timeEnd();
 });
-const playRound = (X, Y) => {
+const playRound = (X, Y) => __awaiter(void 0, void 0, void 0, function* () {
     var getRounded = (RAW) => {
         const FIRST_DIGITS = Math.floor(RAW / 100), LAST_TWO_ROUNDED = parseInt(`${~~(RAW / 10) % 10}${RAW % 10}`) <= 50 ? 25 : 75;
         return parseInt("" + FIRST_DIGITS + LAST_TWO_ROUNDED);
@@ -21,7 +30,7 @@ const playRound = (X, Y) => {
     if (CLICKED_NODE.isEmpty()) {
         CLICKED_NODE.stone = true;
         CLICKED_NODE.color = Player.StoneColor;
-        Player.PlaceStone(X, Y);
+        yield Player.PlaceStone(X, Y);
         AI.PlaceStone();
     }
-};
+});

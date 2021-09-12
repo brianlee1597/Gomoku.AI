@@ -103,5 +103,6 @@ const POINTER_MAP: Map<number, string> = new Map([
 ])
 
 const PATTERN_MAP: Map<number, string> = new Map([
-    [1, 'up'], [2, 'right'], [3, 'topLeft'], [4, 'topRight']
+    [1, 'up'], [2, 'right'], [3, 'topLeft'], [4, 'topRight'], [5, 'left'], [6, 'down'],
+    [7, 'bottomLeft'], [8, 'bottomRight']
 ])

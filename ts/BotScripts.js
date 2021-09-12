@@ -3,7 +3,7 @@ const AICV = document.getElementById('botScanLayer'), AICX = AICV.getContext('2d
 const highlightBoardWithEmphasisOn = (maxNode) => {
     const RANDOM_MARGIN = ~~(Math.random() * 4 + 1), POINTER = POINTER_MAP.get(RANDOM_MARGIN);
     let i = 0;
-    while (i < 11)
+    while (i <= 11)
         highlight(i++, POINTER, maxNode);
 };
 const highlight = (i, POINTER, maxNode) => {
