@@ -8,7 +8,16 @@ body {
   background: #e0e0e0;
 }
 
-body #menu {
+body #intro {
+  z-index: 10000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 500px;
+  height: 500px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -16,16 +25,29 @@ body #menu {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
-body #menu #title {
-  font-size: 4rem;
+body #intro h1 {
+  font-size: 2.5rem;
+  background-color: red;
+}
+
+body #intro h3 {
+  background-color: red;
+}
+
+body #intro table tr th input[type="radio"] {
+  width: 100px;
+}
+
+body #intro h2 {
+  background-color: blue;
 }
 
 body .game_container {

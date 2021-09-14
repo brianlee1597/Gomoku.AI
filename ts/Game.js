@@ -10,8 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const PLAYING_FIELD = document.getElementById('placeStoneLayer');
 const on = PLAYING_FIELD.addEventListener;
+const start_button = document.getElementById("start_button");
 let isLoading = true;
-setTimeout(() => { isLoading = false; }, makeBoard(11));
+start_button.onclick = function () {
+    setTimeout(() => { isLoading = false; }, makeBoard(11));
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("game_container").style.display = "flex";
+};
 on('mousedown', function (e) {
     const RECT = PLAYING_FIELD.getBoundingClientRect(), X = e.clientX - RECT.left, Y = e.clientY - RECT.top;
     if (X < 0 || X > 550 || Y < 0 || Y > 550 || isLoading === true)

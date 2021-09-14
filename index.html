@@ -18,10 +18,14 @@
     <div id="intro">
         <h1>Welcome to Gomoku!</h1>
         <h3>Game Rule: Make 5 in any direction of the board.</h3>
-        <h1>Choose Your color: </h1>
-        <input type="radio" />
-        <input type="radio" />
-        <button onclick="startGame()">Start!</button>
+        <h2>Choose Your color: </h2>
+        <table>
+            <tr>
+                <th><input type="radio" name="color_choice" value="black"/></th>
+                <th><input type="radio" name="color_choice" value="white"/></th>
+            </tr>
+        </table>
+        <button id="start_button">Start!</button>
     </div>
 
     <div class="game_container" id="game_container">
@@ -40,12 +44,7 @@
     </div>
 
     <script>
-        document.getElementById("game_container").style.display = "none";
-
-        function startGame () {
-            document.getElementById("intro").style.display = "none";
-            document.getElementById("game_container").style.display = "flex";
-        }
+        // document.getElementById("game_container").style.display = "none";
     </script>
 </body>
 </html>

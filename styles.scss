@@ -9,16 +9,47 @@ body {
   place-items: center;
   background: #e0e0e0;
 
-  #menu {
+  #intro {
+    z-index: 10000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 500px;
+    height: 500px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 
-    #title {
-      font-size: 4rem;
+    h1 {
+      font-size: 2.5rem;
+
+      background-color: red;
+    }
+    h3 {
+      background-color: red;
+    }
+
+    table {
+      tr {
+        th {
+          input[type="radio"] {
+            width: 100px;
+          }
+        }
+      }
+    }
+
+    h2 {
+
+      background-color: blue;
     }
   }
+
+  //---------------------------------
 
   .game_container {
     width: 100%;
