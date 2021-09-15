@@ -26,7 +26,7 @@ class GraphNode {
         this.y = y
         this.coord_x = y * 25 + (25 * (y - 1))
         this.coord_y = x * 25 + (25 * (x - 1))
-        this.name  = "Node at ("+ "Row " + x + ", Col " + y + ")"
+        this.name  = "Node at ("+"Row "+x+", Col "+y+")"
         this.stone = false
         this.score = 0
         this.color = ""
@@ -51,7 +51,7 @@ class GraphNode {
 
     at  = (POINTER: string): GraphNode => this[POINTER]
 
-    colorIs   = (i: string): boolean => i === this.color ? true : false
+    colorIs = (color: string): boolean => color === this.color ? true : false
 
     opDirOf = (pointer: string): node => {
         return pointer === 'up'? this.down

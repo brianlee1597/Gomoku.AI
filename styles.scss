@@ -10,7 +10,7 @@ body {
   background: #e0e0e0;
 
   #intro {
-    z-index: 10000;
+    z-index: 2147483647;
     position: absolute;
     top: 0;
     left: 0;
@@ -21,19 +21,40 @@ body {
     height: 500px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: top;
     align-items: center;
 
     h1 {
+      display: grid;
+      place-items: center;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 25%;
       font-size: 2.5rem;
-
-      background-color: red;
     }
+
     h3 {
-      background-color: red;
+      display: grid;
+      place-items: center;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 15%;
+    }
+
+    h2 {
+      display: grid;
+      place-items: center;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 15%;
     }
 
     table {
+      width: 100%;
+      height: 25%;
       tr {
         th {
           input[type="radio"] {
@@ -43,9 +64,10 @@ body {
       }
     }
 
-    h2 {
-
-      background-color: blue;
+    button {
+      padding: 20px 60px;
+      background: transparent;
+      border: 1px solid red;
     }
   }
 

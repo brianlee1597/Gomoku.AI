@@ -92,10 +92,12 @@ function clearAllScoreAndHighLights() {
 }
 let visualAI = false;
 function toggleVisual() {
-    const TEXT = document.querySelector('p');
+    let text = document.querySelector('p');
     visualAI = visualAI === true ? false : true;
-    if (TEXT.hasAttribute('hidden'))
-        TEXT.removeAttribute('hidden');
-    else
-        TEXT.setAttribute('hidden', '');
+    if (text.hasAttribute('hidden')) {
+        text.removeAttribute('hidden');
+    }
+    else {
+        text.setAttribute('hidden', '');
+    }
 }

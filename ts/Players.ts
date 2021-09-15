@@ -65,21 +65,21 @@ const AI: Players = {
         }, visualAI ? 1500 : 0)
     },
     maxScoredNode: async (): Promise<GraphNode> => {
-        let ARRAY = new MaxNode()
+        let max_node_filter = new MaxNode()
         let i = 1, node: any
 
         while(i++ <= 11) { 
             node = nodeAt(i, 1)
 
-            while (node !== undefined){
-                if(node.score !== 0) {
-                    ARRAY.add(node)
+            while (node) {
+                if(node.score) {
+                    max_node_filter.add(node)
                 } 
                 node = node.right
             }
         }
         
-        return ARRAY.pop()
+        return max_node_filter.pop()
     },
     DrawStoneOn: async (NODE: GraphNode): Promise<void> => {
         NODE.stone = true

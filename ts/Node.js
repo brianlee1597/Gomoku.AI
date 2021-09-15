@@ -7,7 +7,7 @@ class GraphNode {
         this.hasScore = () => this.score !== 0;
         this.has = (POINTER) => this[POINTER] !== undefined;
         this.at = (POINTER) => this[POINTER];
-        this.colorIs = (i) => i === this.color ? true : false;
+        this.colorIs = (color) => color === this.color ? true : false;
         this.opDirOf = (pointer) => {
             return pointer === 'up' ? this.down
                 : pointer === 'down' ? this.up

@@ -21,22 +21,22 @@ function makeBoard(margin) {
     return 1500;
 }
 let line = 25, speed = 0.25;
-function drawLine(H_OR_V, MARGIN) {
-    const drawTheLine = () => {
+function drawLine(h_or_v, margin) {
+    const drawPortionOfLine = () => {
         line = line < 525 ? line + speed : line;
         BCTX.beginPath();
         BCTX.lineWidth = 1;
         BCTX.strokeStyle = '#a7a7a7';
-        if (H_OR_V === 'horizontal') {
-            BCTX.moveTo(25, MARGIN + 25);
-            BCTX.lineTo(line, MARGIN + 25);
+        if (h_or_v === 'horizontal') {
+            BCTX.moveTo(25, margin + 25);
+            BCTX.lineTo(line, margin + 25);
         }
         else {
-            BCTX.moveTo(MARGIN + 25, 25);
-            BCTX.lineTo(MARGIN + 25, line);
+            BCTX.moveTo(margin + 25, 25);
+            BCTX.lineTo(margin + 25, line);
         }
         BCTX.stroke();
-        requestAnimationFrame(drawTheLine);
+        requestAnimationFrame(drawPortionOfLine);
     };
-    requestAnimationFrame(drawTheLine);
+    requestAnimationFrame(drawPortionOfLine);
 }

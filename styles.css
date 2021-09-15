@@ -9,7 +9,7 @@ body {
 }
 
 body #intro {
-  z-index: 10000;
+  z-index: 2147483647;
   position: absolute;
   top: 0;
   left: 0;
@@ -25,29 +25,58 @@ body #intro {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: top;
+      -ms-flex-pack: top;
+          justify-content: top;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
 body #intro h1 {
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 25%;
   font-size: 2.5rem;
-  background-color: red;
 }
 
 body #intro h3 {
-  background-color: red;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 15%;
+}
+
+body #intro h2 {
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 15%;
+}
+
+body #intro table {
+  width: 100%;
+  height: 25%;
 }
 
 body #intro table tr th input[type="radio"] {
   width: 100px;
 }
 
-body #intro h2 {
-  background-color: blue;
+body #intro button {
+  padding: 20px 60px;
+  background: transparent;
+  border: 1px solid red;
 }
 
 body .game_container {

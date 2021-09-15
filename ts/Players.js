@@ -60,18 +60,18 @@ const AI = {
         }), visualAI ? 1500 : 0);
     }),
     maxScoredNode: () => __awaiter(void 0, void 0, void 0, function* () {
-        let ARRAY = new MaxNode();
+        let max_node_filter = new MaxNode();
         let i = 1, node;
         while (i++ <= 11) {
             node = nodeAt(i, 1);
-            while (node !== undefined) {
-                if (node.score !== 0) {
-                    ARRAY.add(node);
+            while (node) {
+                if (node.score) {
+                    max_node_filter.add(node);
                 }
                 node = node.right;
             }
         }
-        return ARRAY.pop();
+        return max_node_filter.pop();
     }),
     DrawStoneOn: (NODE) => __awaiter(void 0, void 0, void 0, function* () {
         NODE.stone = true;
