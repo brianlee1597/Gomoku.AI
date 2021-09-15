@@ -6,7 +6,7 @@ class GraphNode {
         this.hasStone = () => this.stone === true;
         this.hasScore = () => this.score !== 0;
         this.has = (POINTER) => this[POINTER] !== undefined;
-        this.to = (POINTER) => this[POINTER];
+        this.at = (POINTER) => this[POINTER];
         this.colorIs = (i) => i === this.color ? true : false;
         this.opDirOf = (pointer) => {
             return pointer === 'up' ? this.down
@@ -58,11 +58,13 @@ class MaxNode {
         this.maxVal = [];
     }
 }
+const nodeAt = (x, y) => window['nodeAt' + x + 'x' + y];
 const POINTER_MAP = new Map([
     [1, 'up'], [2, 'down'], [3, 'left'], [4, 'right'],
     [5, 'topLeft'], [6, 'topRight'], [7, 'bottomLeft'], [8, 'bottomRight']
 ]);
-const PATTERN_MAP = new Map([
-    [1, 'up'], [2, 'right'], [3, 'topLeft'], [4, 'topRight'], [5, 'left'], [6, 'down'],
-    [7, 'bottomLeft'], [8, 'bottomRight']
+const colorValues = new Map([
+    [0, "White"], [1, 'red'], [2, 'orange'], [3, 'yellow'],
+    [4, 'green'], [5, 'blue'], [6, 'violet'], [7, 'grey']
 ]);
+const colorBy = (score) => score < 8 ? colorValues.get(score) : 'black';

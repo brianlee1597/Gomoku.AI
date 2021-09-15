@@ -1,27 +1,27 @@
 "use strict";
 const UICV = document.getElementById('boardUILayer');
 const BCTX = UICV.getContext('2d');
-const makeBoard = (margin) => {
+function makeBoard(margin) {
     for (let x = 1; x <= margin; x++)
         for (let y = 1; y <= margin; y++)
             window['nodeAt' + x + 'x' + y] = new GraphNode(x, y);
     for (let x = 1; x <= margin; x++)
         for (let y = 1; y <= margin; y++) {
-            var NODE = nodeAt(x, y);
+            const NODE = nodeAt(x, y);
             NODE.left = nodeAt(x, y - 1), NODE.bottomLeft = nodeAt(x + 1, y - 1);
             NODE.up = nodeAt(x - 1, y), NODE.bottomRight = nodeAt(x + 1, y + 1);
             NODE.right = nodeAt(x, y + 1), NODE.topLeft = nodeAt(x - 1, y - 1);
             NODE.down = nodeAt(x + 1, y), NODE.topRight = nodeAt(x - 1, y + 1);
         }
-    let coord = 0, totalTimeOut = 1500;
+    let coord = 0;
     do {
         drawLine('horizontal', coord);
         drawLine('vertical', coord);
     } while ((coord += 550 / margin) < 550);
-    return totalTimeOut;
-};
+    return 1500;
+}
 let line = 25, speed = 0.25;
-const drawLine = (H_OR_V, MARGIN) => {
+function drawLine(H_OR_V, MARGIN) {
     const drawTheLine = () => {
         line = line < 525 ? line + speed : line;
         BCTX.beginPath();
@@ -39,5 +39,4 @@ const drawLine = (H_OR_V, MARGIN) => {
         requestAnimationFrame(drawTheLine);
     };
     requestAnimationFrame(drawTheLine);
-};
-const nodeAt = (x, y) => window['nodeAt' + x + 'x' + y];
+}

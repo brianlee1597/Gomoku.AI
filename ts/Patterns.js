@@ -1,10 +1,21 @@
 "use strict";
-const runScoringAlgorithm = () => {
-    checkForFourInRow();
-    checkForThreeInRow();
-    checkForTwoInRow();
-    checkForAdjacent();
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
 };
+function runScoringAlgorithm() {
+    return __awaiter(this, void 0, void 0, function* () {
+        checkForFourInRow();
+        checkForThreeInRow();
+        checkForTwoInRow();
+        checkForAdjacent();
+    });
+}
 const checkForAdjacent = () => {
     for (let i = 1; i <= 11; i++) {
         var node = nodeAt(i, 1);
@@ -23,7 +34,7 @@ const checkForAdjacent = () => {
 const checkForTwoInRow = () => {
     var getPatternAndScore = (color) => {
         var weight = color === Player.StoneColor ? 5 : 6;
-        PATTERN_MAP.forEach(pointer => {
+        POINTER_MAP.forEach(pointer => {
             if (node.pointer !== undefined
                 && !node.pointer.isChecked()
                 && node.pointer.colorIs(color)) {
@@ -72,7 +83,7 @@ const checkForThreeInRow = () => {
     var node;
     var getPatternAndScore = (color) => {
         var weight = color === Player.StoneColor ? 8 : 10;
-        PATTERN_MAP.forEach(pointer => {
+        POINTER_MAP.forEach(pointer => {
             if (node[pointer] !== undefined && !node[pointer].isChecked()
                 && node[pointer].colorIs(color)) {
                 if (node.numOfPAway(2, pointer) !== undefined
@@ -104,7 +115,7 @@ const checkForFourInRow = () => {
     var node;
     var getPatternAndScore = (color) => {
         var weight = color === Player.StoneColor ? 100 : 1000;
-        PATTERN_MAP.forEach(pointer => {
+        POINTER_MAP.forEach(pointer => {
             if (node[pointer] !== undefined && !node[pointer].isChecked()
                 && node[pointer].colorIs(color)) {
                 if (node.numOfPAway(2, pointer) !== undefined

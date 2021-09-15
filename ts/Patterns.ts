@@ -1,4 +1,4 @@
-const runScoringAlgorithm = () => {
+async function runScoringAlgorithm (): Promise<void> {
     // checkForFork()
 
     checkForFourInRow()
@@ -36,7 +36,7 @@ const checkForTwoInRow = (): void => {
     var getPatternAndScore = (color: string) => {
         var weight = color === Player.StoneColor? 5: 6
 
-        PATTERN_MAP.forEach(pointer => {
+        POINTER_MAP.forEach(pointer => {
 
             if (node.pointer !== undefined 
                 && !node.pointer.isChecked() 
@@ -90,7 +90,7 @@ const checkForThreeInRow = (): void => {
     var node: any
     var getPatternAndScore = (color: string) => {
         var weight = color === Player.StoneColor? 8: 10
-        PATTERN_MAP.forEach(pointer => {
+        POINTER_MAP.forEach(pointer => {
 
             if(node[pointer] !== undefined && !node[pointer].isChecked() 
             && node[pointer].colorIs(color)){
@@ -126,7 +126,7 @@ const checkForFourInRow = () => {
     var node: any
     var getPatternAndScore = (color: string) => {
         var weight = color === Player.StoneColor? 100: 1000
-        PATTERN_MAP.forEach(pointer => {
+        POINTER_MAP.forEach(pointer => {
             if(node[pointer] !== undefined && !node[pointer].isChecked() 
             && node[pointer].colorIs(color)){
 

@@ -1,78 +1,84 @@
-const STCV = <HTMLCanvasElement> document.getElementById('placeStoneLayer'),
-      CTXT = <CanvasRenderingContext2D> STCV.getContext('2d'),
-      playerChoice = '#CBB9A8', 
-      AIChoice = playerChoice == '#CBB9A8' ? '#1F271B' : '#CBB9A8'
+const STCV = <HTMLCanvasElement> document.getElementById('placeStoneLayer')
+const CTXT = <CanvasRenderingContext2D> STCV.getContext('2d')
+const playerChoice = '#CBB9A8'
+const AIChoice = playerChoice == '#CBB9A8' ? '#1F271B' : '#CBB9A8'
 
-async function drawStone (X: number, Y: number) {
+//-----------------------------------------------------------------------//
+
+async function drawStone (X: number, Y: number): Promise<void> {
     CTXT.beginPath()
     CTXT.arc(X, Y, 20, 0, 2 * Math.PI, false)
     CTXT.fill(), CTXT.stroke()
 }
 
-const endGame = (color: string) => {
-    setTimeout(() => alert((color === AI.StoneColor? "AI": "Player") + " Wins!"), 50)
-}
+async function checkIfFive (fillStyle: string, rootNode: GraphNode): Promise<void> {
+    let recursivelyCountUntilFive = (count: number, node: GraphNode, direction: string): void => {
 
-const checkIfFive = async (fillStyle: string, rootNode: GraphNode) => {
-
-    const recursivelyCountUntilFive = (count: number, node: GraphNode, direction: string) => {
         if(count === 5) 
             endGame(fillStyle)
         else if (!node.has(direction) || 
-            node[direction].isEmpty() || 
-            node[direction].color !== fillStyle)
+            node.at(direction).isEmpty() || 
+            node.at(direction).color !== fillStyle)
             return
         else 
             recursivelyCountUntilFive(count + 1, node[direction], direction)
     }
 
-    PATTERN_MAP.forEach(direction => recursivelyCountUntilFive(1, rootNode, direction))
+    POINTER_MAP.forEach(direction => recursivelyCountUntilFive(1, rootNode, direction))
 }
+
+//-----------------------------------------------------------------------//
 
 interface Players {
     StoneColor: string
-    PlaceStone: () => void
+    PlaceStone: (X?: number, Y?: number) => Promise<void>
     [key: string]: any
 }
 
-const Player = {
+const Player: Players = {
     StoneColor: playerChoice,
     PlaceStone: async (X: number, Y: number): Promise<void> => {
         CTXT.fillStyle = Player.StoneColor
         await drawStone(X, Y)
 
-        var ROW = (Y+25)/50, COL = (X+25)/50
-        checkIfFive(Player.StoneColor, nodeAt(ROW, COL))
+        var row = (Y+25)/50, col = (X+25)/50
+        checkIfFive(Player.StoneColor, nodeAt(row, col))
     }
 }
 
-const AI = {
+const AI: Players = {
     StoneColor: AIChoice,
-    PlaceStone: (): void => {
-        runScoringAlgorithm()
-        var maxNode: GraphNode = AI.maxScoredNode()
+    PlaceStone: async (): Promise<void> =>{
+        await runScoringAlgorithm()
+        let maxNode: GraphNode = await AI.maxScoredNode()
+
         if (visualAI) {
             isLoading = true
             highlightBoardWithEmphasisOn(maxNode)
         }
-        setTimeout(async () => {
+        setTimeout(async (): Promise<void> => {
             await AI.DrawStoneOn(maxNode)
             await checkIfFive(AI.StoneColor, maxNode)
-            clearAllScoreAndHighLights()
+            await clearAllScoreAndHighLights()
+
             isLoading = false
         }, visualAI ? 1500 : 0)
     },
-    maxScoredNode: (): GraphNode => {
-        var ARRAY: MaxNode = new MaxNode()
-        let i = 1, node: any; 
+    maxScoredNode: async (): Promise<GraphNode> => {
+        let ARRAY = new MaxNode()
+        let i = 1, node: any
+
         while(i++ <= 11) { 
             node = nodeAt(i, 1)
+
             while (node !== undefined){
-                if(node.score !== 0)
+                if(node.score !== 0) {
                     ARRAY.add(node)
+                } 
                 node = node.right
             }
         }
+        
         return ARRAY.pop()
     },
     DrawStoneOn: async (NODE: GraphNode): Promise<void> => {

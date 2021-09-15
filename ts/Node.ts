@@ -49,7 +49,7 @@ class GraphNode {
 
     has = (POINTER: string): boolean | void => this[POINTER] !== undefined
 
-    to  = (POINTER: string): node=> this[POINTER]
+    at  = (POINTER: string): GraphNode => this[POINTER]
 
     colorIs   = (i: string): boolean => i === this.color ? true : false
 
@@ -80,7 +80,7 @@ class MaxNode {
 
     constructor () { this.maxVal = [] }
 
-    add = (node: GraphNode) => {
+    add = (node: GraphNode): void => {
         if(node.isEmpty()){
             if (!this.maxVal.length) 
                 this.maxVal.push(node)
@@ -97,12 +97,18 @@ class MaxNode {
     }
 }
 
+//-----------------------------------------------------------------------//
+
+const nodeAt = (x: number,y: number): GraphNode => window['nodeAt' + x + 'x' + y]
+
 const POINTER_MAP: Map<number, string> = new Map([
     [1, 'up'], [2, 'down'], [3, 'left'], [4, 'right'],
     [5, 'topLeft'], [6, 'topRight'], [7, 'bottomLeft'], [8, 'bottomRight']
 ])
 
-const PATTERN_MAP: Map<number, string> = new Map([
-    [1, 'up'], [2, 'right'], [3, 'topLeft'], [4, 'topRight'], [5, 'left'], [6, 'down'],
-    [7, 'bottomLeft'], [8, 'bottomRight']
+const colorValues: Map<number, string> = new Map([
+    [0, "White"], [1, 'red'], [2, 'orange'], [3, 'yellow'],
+    [4, 'green'], [5, 'blue'], [6, 'violet'], [7, 'grey']
 ])
+
+const colorBy = (score: number): string => score < 8? colorValues.get(score): 'black'
