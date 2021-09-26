@@ -49,7 +49,7 @@ const Player: Players = {
 const AI: Players = {
     StoneColor: AIChoice,
     PlaceStone: async (): Promise<void> =>{
-        await runScoringAlgorithm()
+        await scoringAlgorithm()
         let maxNode: GraphNode = await AI.maxScoredNode()
 
         if (visualAI) {

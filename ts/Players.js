@@ -46,7 +46,7 @@ const Player = {
 const AI = {
     StoneColor: AIChoice,
     PlaceStone: () => __awaiter(void 0, void 0, void 0, function* () {
-        yield runScoringAlgorithm();
+        yield scoringAlgorithm();
         let maxNode = yield AI.maxScoredNode();
         if (visualAI) {
             isLoading = true;
